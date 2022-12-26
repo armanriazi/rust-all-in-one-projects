@@ -1,9 +1,0 @@
-[package]
-name = "rust-in-action-data-csv_bin"
-version = "0.1.0"
-edition = "2021"
-
-[[bin]]
-doc = true
-name = "rust-in-action-data-csv-main"
-path = "src/rust-in-action-data-csv-main.rs"

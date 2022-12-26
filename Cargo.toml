@@ -12,12 +12,9 @@ members = [
 
     "workspace/shared",
 
-    "workspace/documentation/knoldus/knoldus_bin",
-    "workspace/documentation/knoldus/knoldus_lib",
 
-    "workspace/feature/rust-doc/mod_draw_bin",
-    "workspace/feature/rust-doc/mod_draw_lib",
-    "workspace/feature/code-like-pro/dryoc_bin",
+    "workspace/projects/cleancode_survey/my/cleancode_survey_bin",
+    "workspace/projects/cleancode_survey/my/cleancode_survey_lib",
 
     "workspace/projects/file/rust-in-action/file_bin",
     "workspace/projects/file/rust-in-action/file_lib",
@@ -27,74 +24,4 @@ members = [
     "workspace/projects/satelite_messaging/rust-in-action/satelite_messaging_lib",
     "workspace/projects/process_line/rust-in-action/process_line_bin",
     "workspace/projects/process_line/rust-in-action/process_line_lib",
-
-    "workspace/data/rust-in-action/csv_bin",
-    "workspace/data/regex/rust-in-action",
-    "workspace/data/random/rust-in-action",
-    "workspace/data/convert/try_into/rust-in-action",
-    "workspace/data/convert/generic/as_ref/rust-in-action",
-    "workspace/data/convert/generic/into/rust-in-action",
-    "workspace/data/convert/text_to_enum/rust-in-action",
-    "workspace/data/io/file/rust-in-action",
-    "workspace/data/io/io/rust-in-action",
-
-    "workspace/borrowchecker/lifetime/elision/rust-doc",
-    "workspace/borrowchecker/lifetime/elision/rust-in-action",
-    "workspace/borrowchecker/semantic/rust-in-action",
-    "workspace/borrowchecker/lifetime/static/rust-in-action",
-    "workspace/borrowchecker/lifetime/static/pnkfx",
-    "workspace/borrowchecker/lifetime/static/packtpub",
-    "workspace/borrowchecker/lifetime/static/rust-egg",
-    "workspace/borrowchecker/lifetime/static/rust-doc",
-    "workspace/borrowchecker/lifetime/dangling/rust-doc",
-    "workspace/borrowchecker/lifetime/dangling/rust-egg",
-    "workspace/borrowchecker/lifetime/dangling/rust-in-action",
-
-    "workspace/thread/race/rust-in-action",
-
-    "workspace/types/struct/rust-doc",
-    "workspace/types/struct/rust-egg",
-    "workspace/types/return/rust-egg",
-    "workspace/types/return/packpub",
-    "workspace/types/generic/rust-in-action",
-    "workspace/types/generic/rust-doc",
-    "workspace/types/primitive/float/rust-in-action",
-    "workspace/types/primitive/char/rust-egg",
-    "workspace/types/primitive/array/rust-egg",
-    "workspace/types/primitive/array/rust-in-action",
-    "workspace/types/primitive/tuple/rust-egg",
-    "workspace/types/primitive/int/code-like-a-pro",
-    "workspace/types/primitive/int/rust-in-action",
-    "workspace/types/primitive/int/num/rust-in-action",
-    "workspace/types/primitive/operator/rust-in-action",
-    "workspace/types/string/rust-doc",
-    "workspace/types/string/rust-egg",
-    "workspace/types/string/packtpub",
-    "workspace/types/string/rust-in-action",
-    "workspace/types/string/code-like-a-pro",
-    "workspace/types/primitive/radix/rust-in-action",
-    "workspace/types/complex/num/rust-in-action",
-
-    "workspace/flowcontrol/loop/rust-in-action",
-    "workspace/flowcontrol/loop/packtpub",
-    "workspace/flowcontrol/for/rust-in-action",
-    "workspace/flowcontrol/match/rust-doc",
-    "workspace/flowcontrol/match/rust-in-action",
-    "workspace/flowcontrol/while/rust-in-action",
-    "workspace/flowcontrol/pnfx-flowcontrol",
-
-    "workspace/collection/vec/rust-in-action",
-
-    "workspace/commandline/rust-in-action",
-
-    "workspace/errorhandling/rust-in-action",
-
-    "workspace/duplication/copy-clone/rust-in-action",
-    "workspace/duplication/rc/rust-in-action",
-
-    "workspace/memory/piston/rust-in-action",
-    "workspace/memory/winapi/rust-in-action",
-
-    "workspace/pointers/smartpointer/box/rust-in-action",
-    "workspace/pointers/rust-in-action",
 ]

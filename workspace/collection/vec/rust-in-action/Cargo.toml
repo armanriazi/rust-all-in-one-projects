@@ -1,9 +1,0 @@
-[package]
-name = "rust-in-action-vec-collection_bin"
-version = "0.1.0"
-edition = "2021"
-
-[[bin]]
-doc = true
-name = "rust-in-action-vec-collection-main"
-path = "src/rust-in-action-vec-collection-main.rs"
