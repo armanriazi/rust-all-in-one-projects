@@ -1,77 +1,98 @@
-pub struct Survey<T>{
-    pub survey_result_detail: T,
-    pub name: T,
-    pub url: T,
-    pub participant_count: T,
-    pub response_rate: T,
-    pub submitted_response_count: T,
+use log::{trace, info};
+use serde_json::Value;
+
+#[derive(Debug, PartialEq, PartialOrd)]
+pub struct Survey {
+    pub name: String,
+    pub url: String,
+    pub participant_count: i32,
+    pub response_rate: f64,
+    pub submitted_response_count: i32,
 }
 
-impl<T> Survey<T>{
-    pub fn new(&self, survey:Self)-> Self{
-        Survey{
-            survey_result_detail :survey.survey_result_detail ,
-            name: survey.name,
-            url: survey.url,
-            participant_count: survey.participant_count,
-            response_rate: survey.response_rate,
-            submitted_response_count: survey.submitted_response_count,
+impl Survey {
+    pub fn new(
+        name: String,
+        url: String,
+        participant_count: i32,
+        response_rate: f64,
+        submitted_response_count: i32,
+    ) -> Self {
+        Survey {
+            name: name,
+            url: url,
+            participant_count: participant_count,
+            response_rate: response_rate,
+            submitted_response_count: submitted_response_count,
         }
     }
-    pub fn set_survey_result_detail(&mut self,survey_result_detail:T) {
-        self.survey_result_detail = survey_result_detail;
-    }
-    pub fn set_name(&mut self,name:T) {
+
+    pub fn set_name(&mut self, name: String) {
         self.name = name;
     }
-    pub fn set_url(&mut self,url:T) {
+    pub fn set_url(&mut self, url: String) {
         self.url = url;
     }
-    pub fn set_participant_count(&mut self,participant_count:T) {
+    pub fn set_response_rate(&mut self, response_rate: f64) {
+        self.response_rate = response_rate;
+    }
+    pub fn set_participant_count(&mut self, participant_count: i32) {
         self.participant_count = participant_count;
     }
+    pub fn set_submitted_response_count(&mut self, submitted_response_count: i32) {
+        self.submitted_response_count = submitted_response_count;
+    }
 }
+
+#[derive(Debug, PartialEq)]
 pub enum Message {
-    Update(usize,String),
-    Read(),
+    Update(usize, String, Value),
     Echo(String),
-    Quit,
+    Completed,
 }
 
-pub struct State<T>{
-    pub survey: Survey<T>,
-    pub description: T,
-    pub quit: T,
+#[derive(Debug, PartialEq, PartialOrd)]
+pub struct State {
+    pub survey: Survey,
+    pub description: String,
+    pub completed: bool,
 }
 
-impl<T>  State<T> {
-
-    fn quit(&mut self) {
-        self.quit = true;
+impl State {
+    fn completed(&mut self) {
+        self.completed = true;
+        self.read_survey();
     }
 
     fn echo(&self, s: String) {
         println!("{}", s);
     }
 
-    fn particle_setter_survey(&self, index: T, value: T) {
-        match index {
-            0 => self.survey.set_survey_result_detail(value),
-            1 => self.survey.set_name(value),
-            2 => self.survey.set_url(value),
-            3 => self.survey.set_participant_count(value),
-        }
+    /// serde_json has a issue to url keyword-sensetive word, so be careful
+    fn particle_setter_survey(&mut self, key: Option<&str>, value: Value) {
+
+        match key {
+            Some("name") => &self.survey.set_name(value.to_string()),
+            Some("participant_count") => &self.survey.set_participant_count(value.to_string().parse::<i32>().unwrap_or(-1)),
+            Some("response_rate") => &self.survey.set_response_rate(value.to_string().parse::<f64>().unwrap_or(-1.0)),
+            Some("iurl") | Some("url") | Some("rl") => &self.survey.set_url(value.to_string()),
+            Some("submitted_response_count") => &self.survey.set_submitted_response_count(value.to_string().parse::<i32>().unwrap_or(-1)),
+            Some(&_) => &self.process(Message::Completed),
+            None => &self.process(Message::Completed)
+        };
+    }
+    fn read_survey(&self) {
+        trace!("{:?}\n", &self);
     }
 
-
-    pub  fn process(&mut self, message: Message) {
+    pub fn process(&mut self, message: Message) {
         match message {
-            Message::Update(index,value) => {
-                self.particle_setter_survey(index,value);
+            Message::Update(index, key, value) => {
+
+                self.particle_setter_survey(Some(key.as_str()), value);
             }
             Message::Echo(s) => self.echo(s),
-            Message::Quit => self.quit(),
-            Message::Read() => todo!(),
+            Message::Completed => self.completed(),
         }
     }
 }

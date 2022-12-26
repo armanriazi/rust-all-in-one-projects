@@ -20,26 +20,24 @@ where
     trace!("{:?}",value_fields);
 
     let _count=value_fields.as_object().unwrap().into_iter().enumerate().count();
+    let mut state = State {
+            completed: false,
+            survey: Survey::new(String::default(),String::default(),0,0.0,0),
+            description: String::default(),
+        };
 
         value_fields.as_object().unwrap().into_iter().enumerate().for_each(|(_i, value_of_key)| {
 
-            process_message_call(_i,&value_of_key.1);
+            process_message_call(&mut state,_i,value_of_key.0.to_string(), value_of_key.1.to_owned());
             trace!("\n value_of_key {:?}-{:?}\n",_i,value_of_key);
         });
 
     Ok(())
 }
 
-pub fn process_message_call(index:usize,value_of_key:Value) {
-        let mut state = State {
-            quit: false,
-            survey: todo!(),
-            description: todo!(),
-        };
-        state.process(Message::Update(index,value_of_key.to_string()));
-        state.process(Message::Echo(String::from("hello world")));
-        state.process(Message::Quit);
+pub fn process_message_call(state: &mut State,index:usize,key:String,value:Value) {
 
-        //assert_eq!(state. ,String::from("Simple Survey"));
-        //assert_eq!(state.quit, true);
-    }
+        state.process(Message::Update(index,key.clone(),value));
+        state.process(Message::Echo(String::from(format!("Making model(updated key successfuly):{:?}",key))));
+        state.process(Message::Completed);
+}

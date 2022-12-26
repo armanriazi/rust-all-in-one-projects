@@ -55,7 +55,7 @@ pub fn main() -> Result<(), CustomError> {
     let mut mode = String::default();
     let mut file_name = String::default();
 
- if (&args).len() <= 1 {
+    if (&args).len() <= 1 {
         println!("** Please select a runner mode\n Help(file path transaction_list, or macrojson transaction_list)\n Default is cargo run macrojson **\n");
         args.push("macrojson".to_owned());
     } else {
@@ -97,10 +97,7 @@ pub fn main() -> Result<(), CustomError> {
     Ok(())
 }
 
-fn open_file(name: &str) -> std::io::Result<File> {
-     info!("{:?}",&name);
-    Ok(File::open(name)?)
-}
+
 
 pub fn survey_init_env_logger(is_enable:bool) {
 
@@ -114,14 +111,17 @@ pub fn survey_init_env_logger(is_enable:bool) {
         info!("------------Welcome to env_logger------------");
     }
     else  {
-        println!("----------env_logger have not been activated----------");
+        println!("-------env_logger have not been activated-------");
     }
 }
 
+/// # Another way to read from file
+/// ```rust,no_run
+///let reader = BufReader::new(file);
+///let serde_values = serde_json::from_reader(reader)?;
+/// ```
 pub fn sample_json_data_from_file(file: serde_json::Value) -> Result<serde_json::Value, CustomError> {
     println!("Selected mode is file!");
-    //let reader = BufReader::new(file);
-    //let serde_values = serde_json::from_reader(reader)?;
 
     return Ok(file);
 }
