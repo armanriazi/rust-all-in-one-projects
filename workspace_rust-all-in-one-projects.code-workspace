@@ -2,9 +2,6 @@
     "folders": [
         {
             "path": "."
-        },
-        {
-            "path": "../rust-all-in-one"
         }
     ],
     "settings": {
