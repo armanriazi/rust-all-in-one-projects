@@ -13,6 +13,8 @@ members = [
     "workspace/shared",
 
 
+    "workspace/projects/pacman/my/pacman_bin",
+    "workspace/projects/pacman/my/pacman_lib",
     "workspace/projects/cleancode_survey/my/cleancode_survey_bin",
     "workspace/projects/cleancode_survey/my/cleancode_survey_lib",
 

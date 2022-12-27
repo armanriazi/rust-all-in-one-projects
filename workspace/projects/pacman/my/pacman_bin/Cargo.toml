@@ -1,0 +1,28 @@
+[package]
+authors = ["Automatically generated"]
+edition = "2021"
+name = "pacman_bin"
+publish = false
+version = "0.0.0"
+
+[dependencies]
+pacman_lib = { path = "../pacman_lib"}
+serde = { version = "1.0", features = ["derive"] }
+log = "0.4.0"
+env_logger = "0.9.0"
+
+[dev-dependencies]
+proptest = "1"
+pretty_assertions = "1"
+env_logger = "0.9.0"
+log = "0.4.0"
+
+#[workspace]
+#members = ["."]
+
+
+[[bin]]
+doc = true
+name = "pacman_main_bin"
+path = "src/pacman_main_bin.rs"
+test = true
