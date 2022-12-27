@@ -1,4 +1,4 @@
-#![allow(dead_code, unused_variables)]
+#![allow(dead_code, unused_variables,unused_imports)]
 use cleancode_survey_lib::core::factory::json_factory;
 use cleancode_survey_lib::{core::error::CustomError,core::sample::*};
 use log::{debug, error, log_enabled, info, Level};
@@ -56,7 +56,7 @@ pub fn main() -> Result<(), CustomError> {
     let mut file_name = String::default();
 
     if (&args).len() <= 1 {
-        println!("** Please select a runner mode\n Help(file path transaction_list, or macrojson transaction_list)\n Default is cargo run macrojson **\n");
+        info!("** Please select a runner mode\n Help(file path transaction_list, or macrojson transaction_list)\n Default is cargo run macrojson **\n");
         args.push("macrojson".to_owned());
     } else {
         mode = (&args[1]).trim().to_lowercase();
@@ -76,19 +76,19 @@ pub fn main() -> Result<(), CustomError> {
         })?;
 
     } else if &mode == "macrojson" {
-        println!("Selected mode is macrojson\n");
+        info!("Selected mode is macrojson\n");
         json_factory( || {
             sample_json_data_from_module()
         })?;
 
     } else if &mode == "stringjson" {
-        println!("Selected mode is stringjson\n");
+        info!("Selected mode is stringjson\n");
         json_factory( || {
             sample_json_data_from_string()
         })?;
 
     } else {
-        println!("The mode is not selected! Default is macrojson\n");
+        info!("The mode is not selected! Default is macrojson\n");
         json_factory( || {
             sample_json_data_from_module()
         })?;
@@ -111,7 +111,7 @@ pub fn survey_init_env_logger(is_enable:bool) {
         info!("------------Welcome to env_logger------------");
     }
     else  {
-        println!("-------env_logger have not been activated-------");
+        info!("-------env_logger have not been activated-------");
     }
 }
 
@@ -121,91 +121,7 @@ pub fn survey_init_env_logger(is_enable:bool) {
 ///let serde_values = serde_json::from_reader(reader)?;
 /// ```
 pub fn sample_json_data_from_file(file: serde_json::Value) -> Result<serde_json::Value, CustomError> {
-    println!("Selected mode is file!");
+    info!("Selected mode is file!");
 
     return Ok(file);
 }
-
-
-
-
-// pub fn survey_sample_json_data_from_module() -> Result<serde_json::Value, CustomError> {
-//     Ok(json!({
-//     "blocks":[{
-//         "block1":[{
-//             "transactions":[{
-//                 "transaction1":[{
-//                         "inputs":[{
-
-//                         }],
-//                         "outputs":[{
-//                             "to_addr": "Alice",
-//                             "value": "50"
-//                         },{
-//                             "to_addr": "Bob",
-//                             "value": "10"
-//                         }]
-//                 }]
-//             }]
-//         }],
-//         "block2":[{
-//             "transactions":[{
-//                 "transaction1":[{
-//                         "inputs":[{
-//                         }],
-//                         "outputs":[{
-//                             "to_addr": "Alice",
-//                             "value": "1000"
-//                         },{
-//                             "to_addr": "Bob",
-//                             "value": "1000"
-//                         }]
-//                 }] ,
-//                 "transaction2":[{
-//                         "inputs":[{
-//                             "to_addr": "Alice",
-//                             "value": "50"
-//                         },{
-//                             "to_addr": "Bob",
-//                             "value": "10"
-//                         }],
-//                         "outputs":[{
-//                             "to_addr": "Alice",
-//                             "value": "40"
-//                         },{
-//                             "to_addr": "Bob",
-//                             "value": "20"
-//                         }]
-//                 }]
-//             }]
-//         }]
-//       }]
-//     }))
-// }
-
-// pub fn survey_sample_json_data_from_string() -> Result<serde_json::Value, CustomError> {
-//     let json = r#"{
-//     "blocks":[{
-//         "block1":[{
-//             "transactions":[{
-//                     "transaction1":[{
-//                         "inputs":[{
-//                         }],
-//                         "outputs":[{
-//                             "to_addr": "Alice",
-//                             "value": "1000"
-//                         },{
-//                             "to_addr": "Bob",
-//                             "value": "1000"
-//                         }]
-//                     }]
-//             }]
-//         }]
-//     }]
-//     }
-//     "#;
-
-//     let js = serde_json::from_str(json).unwrap();
-
-//     Ok(js)
-// }
