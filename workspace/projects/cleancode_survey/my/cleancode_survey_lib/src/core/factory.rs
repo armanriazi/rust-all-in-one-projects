@@ -9,7 +9,7 @@ use chrono;
 #[allow(dead_code)]
 #[allow(unused_mut)]
 
-pub fn json_factory<F>(f: F) -> Result<(), CustomError>
+pub fn json_factory<F>(f: F,user_id: u32) -> Result<(), CustomError>
 where
     F: FnOnce() -> Result<serde_json::Value, CustomError>,
 {
@@ -27,7 +27,9 @@ where
         completed: false,
         survey: Survey::new(String::default(), String::default(), 0, 0.0, 0),
         datetime: chrono::offset::Utc::now().to_string(),
-        result: 0,
+        description: String::default(),
+        result: 0.0,
+        user_id:user_id
     };
 
     value_fields

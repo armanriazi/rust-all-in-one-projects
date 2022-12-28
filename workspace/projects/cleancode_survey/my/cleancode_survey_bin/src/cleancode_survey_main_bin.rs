@@ -3,6 +3,7 @@ use cleancode_survey_lib::core::factory::json_factory;
 use cleancode_survey_lib::{core::error::CustomError,core::sample::*};
 use log::{debug, error, log_enabled, info, Level};
 use env_logger::{Builder, Target};
+use std::process;
 use std::{env, fs, path::Path};
 use std::{fs::File, env::args};
 use std::io::BufReader;
@@ -40,58 +41,70 @@ use std::io::BufReader;
 
 /// cargo run
 /// RUST_LOG=INFO time cargo run cleancode_survey ../data/1.json
-
 #[allow(dead_code)]
 #[allow(unused_mut)]
 pub fn main() -> Result<(), CustomError> {
 
+
+    init_app();
 
     survey_init_env_logger(true);
 
     info!("Starting Up...");
 
 
-    let mut args: Vec<String> = env::args().collect();
+    let mut args: Vec<String> = env::args().collect();    
+
     let mut mode = String::default();
+    let mut user_id:u32 = 0;
     let mut file_name = String::default();
 
     if (&args).len() <= 1 {
         info!("** Please select a runner mode\n Help(file path transaction_list, or macrojson transaction_list)\n Default is cargo run macrojson **\n");
         args.push("macrojson".to_owned());
     } else {
-        mode = (&args[1]).trim().to_lowercase();
+        user_id=(&args[1]).trim().parse::<u32>().unwrap_or(0);
+        mode = (&args[2]).trim().to_lowercase();
     }
-     info!("Mode: {:?}\n", &mode);
+     info!("UserId: {:?}\n", user_id.clone());
+     info!("Mode: {:?}\n", mode.clone());
 
+    if &user_id <= &0 {
+        dbg!("Select user id > 0");
+         process::exit(1);
+    }
     if &mode == "file" {
-        file_name = (&args[2]).trim().to_lowercase();
-         info!("file name: {:?}\n", &file_name);
+        for (i,arg) in args.iter().enumerate(){                    
+            if arg.find("json").is_some(){
+                //file_name = arg.to_string();
+                let json = fs::read_to_string(arg).unwrap();
 
-        let json = fs::read_to_string(file_name).unwrap();
+                let file: serde_json::Value = serde_json::from_str(&json)?;
 
-        let file: serde_json::Value = serde_json::from_str(&json)?;
+                json_factory( || {
+                    sample_json_data_from_file(file)                    
+                },user_id)?;
+            }
+        }
 
-        json_factory( || {
-            sample_json_data_from_file(file)
-        })?;
 
     } else if &mode == "macrojson" {
         info!("Selected mode is macrojson\n");
         json_factory( || {
             sample_json_data_from_module()
-        })?;
+        },user_id)?;
 
     } else if &mode == "stringjson" {
         info!("Selected mode is stringjson\n");
         json_factory( || {
             sample_json_data_from_string()
-        })?;
+        },user_id)?;
 
     } else {
         info!("The mode is not selected! Default is macrojson\n");
         json_factory( || {
             sample_json_data_from_module()
-        })?;
+        },user_id)?;
 
     }
     Ok(())
@@ -124,4 +137,19 @@ pub fn sample_json_data_from_file(file: serde_json::Value) -> Result<serde_json:
     info!("Selected mode is file!");
 
     return Ok(file);
+}
+
+
+fn init_app()->impl std::process::Termination {
+    let machine_kind = if cfg!(unix) {
+    println!("I'm running on a {} machine!", "unix");
+    std::process::ExitCode::SUCCESS
+    
+    } else if cfg!(windows) {
+        println!("I'm running on a {} machine!", "windows");
+        std::process::ExitCode::SUCCESS
+    } else {  
+    println!("I'm running on a {} machine!", "unknown");
+    std::process::ExitCode::FAILURE
+    };
 }

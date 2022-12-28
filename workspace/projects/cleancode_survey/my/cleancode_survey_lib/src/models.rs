@@ -25,7 +25,9 @@ pub struct State {
     pub survey: Survey,
     pub datetime: String,
     pub completed: bool,
-    pub result: u32,
+    pub result: f32,
+    pub description: String,
+    pub user_id: u32
 }
 
 impl Survey {
@@ -88,7 +90,7 @@ impl State {
                 .set_participant_count(value.to_string().parse::<i32>().unwrap_or(-1)),
             Some("response_rate") => &self
                 .survey
-                .set_response_rate(value.to_string().parse::<f64>().unwrap_or(-1.0)),
+                .set_response_rate(value.to_string().parse::<f64>().unwrap_or(0.0)),
             Some("iurl") | Some("url") | Some("rl") => &self.survey.set_url(value.to_string()),
             Some("submitted_response_count") => &self
                 .survey
@@ -98,12 +100,13 @@ impl State {
             None => &self.process(Message::IsCompleted(true)),
         };
     }
-    pub fn read_themes(&mut self, themes: Value) -> u32 {
+    pub fn read_themes(&mut self, themes: Value) -> f32 {
         let mut vec_total: Vec<u32> = Vec::default();
         let mut sum: u32 = 0;
         let mut count: u32 = 0;
-        const ONE: u32 = 1;
-
+        let mut is_found_user_in_file=false;
+        const ONE:u32=1;
+        const ZERO:u32=0;
         for item_type_survey in 0..themes.as_array().unwrap().len() {
             let name = themes[item_type_survey].get("name").unwrap();
             let questions = themes[item_type_survey].get("questions").unwrap();
@@ -124,30 +127,43 @@ impl State {
                         .into_iter()
                         .enumerate()
                         .for_each(|(_j, item_type_responses)| {
-                            if item_type_responses["respondent_id"] == ONE {
-                                let _ = &vec_sum.push(
-                                    item_type_responses["response_content"]
+                            if item_type_responses["respondent_id"] == self.user_id {
+                                is_found_user_in_file=true;
+                                let verifed_response_content=item_type_responses["response_content"]
                                         .as_str()
-                                        .unwrap()
-                                        .parse::<u32>()
-                                        .unwrap(),
-                                );
-                                count = count.add(ONE);
+                                        .unwrap_or("0")
+                                        .parse::<u32>()                                        
+                                        .unwrap_or(0);
+                                let _ = &vec_sum.push(verifed_response_content.clone());
+                                if !verifed_response_content.eq(&ZERO){
+                                    count = count.add(ONE);
+                                }
                             }
                         });
+                       
                 });
+                 
+            if !is_found_user_in_file{                    
+                    self.description=format!("Failed, not found user in a current survey:{}",&self.survey.name);      
+                break;                                           
+            }else{
+                self.description=format!("Successed, found user in a current survey:{}",&self.survey.name);      
+            }
             sum = vec_sum.iter().sum::<u32>();
 
             debug!(
-                "Sum rate per question-type of:{} for User(1) is {:?}",
-                name, &sum
+                "Sum rates per question-type of:{} for user({}) is {:?}",
+                name,&self.user_id, &sum
             );
             let _ = &vec_total.push(sum);
         }
-        let total = &vec_total.iter().sum::<u32>();
-        debug!("For User(1) the total number is {}", &total);
-        debug!("For User(1) the average number is {}", *total / count);
-        *total / count
+        if is_found_user_in_file{
+            let total = &vec_total.iter().sum::<u32>();
+            debug!("For user({}) the total number is {}",&self.user_id, &total);
+            debug!("For user({}) the average number is {:.2}", &self.user_id, (*total as f32/ count as f32) as f32);
+            return *total as f32 / count as f32
+        }        
+        return 0.0;
     }
 
     pub fn process(&mut self, message: Message) {
