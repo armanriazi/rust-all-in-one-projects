@@ -1,15 +1,44 @@
 #![allow(dead_code, unused_variables, unused_imports)]
 
+use proptest::prelude::*;
+//---
 use super::{error::CustomError, *};
 use crate::models::{Message, State, Survey};
-use log::{debug, info};
-use serde_json::Value;
 use chrono;
+use log::{debug, info};
+extern crate serde_json;
+use serde_json::Value;
+///-----------------unit-test
+#[test]
+fn process(){        
+    let  index=5;
+    let key="url".to_string();       
+    let j = "
+        {
+            \"fingerprint\": \"0xF9BA143B95FF6D82\",
+            \"location\": \"Menlo Park, CA\"
+        }";
+    let value:Value= serde_json::from_str(j).unwrap();
+    let mut state= State {   
+    survey: Survey { 
+        name: String::from("Simple Survey"), url: String::from(""), participant_count: 6, response_rate: 0.8333333333333334, submitted_response_count: 5,
+    },
+    user_id:1,
+        datetime: String::from("2022-12-29 13:03:06.128576526 UTC"), 
+        completed: false, 
+        result: 3.8, 
+        description: String::from("Successed, found user in a current survey-Simple Survey"),
+    };
+
+    state.process(Message::Update(index, key.clone(), value));
+
+}
+
+//-----------------
 
 #[allow(dead_code)]
 #[allow(unused_mut)]
-
-pub fn json_factory<F>(f: F,user_id: u32) -> Result<(), CustomError>
+pub fn json_factory<F>(f: F, user_id: u32) -> Result<(), CustomError>
 where
     F: FnOnce() -> Result<serde_json::Value, CustomError>,
 {
@@ -29,7 +58,7 @@ where
         datetime: chrono::offset::Utc::now().to_string(),
         description: String::default(),
         result: 0.0,
-        user_id:user_id
+        user_id: user_id,
     };
 
     value_fields
@@ -52,6 +81,10 @@ where
 }
 
 pub fn process_message_call(state: &mut State, index: usize, key: String, value: Value) {
+    info!(
+        "\n\n---------:{:?}\n\n---------:{:?}\n\n---------:{:?}:\n\n---------:{:?}\n\n",
+        state, index, key, value
+    );
     state.process(Message::Update(index, key.clone(), value));
     state.process(Message::Echo(String::from(format!(
         "Making model(updated key successfuly):{:?}",
@@ -59,3 +92,5 @@ pub fn process_message_call(state: &mut State, index: usize, key: String, value:
     ))));
     state.process(Message::IsCompleted(false));
 }
+
+

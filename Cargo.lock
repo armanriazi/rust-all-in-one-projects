@@ -141,7 +141,7 @@ dependencies = [
 
 [[package]]
 name = "cleancode_survey_bin"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
  "cleancode_survey_lib",
  "env_logger",

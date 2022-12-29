@@ -2,7 +2,7 @@
 edition = "2021"
 name = "cleancode_survey_lib"
 version = "0.1.0"
-author="ArmanRiazi"
+authors = ["ArmanRiazi <arman2riazi@gmail.com>"]
 
 [dev-dependencies]
 proptest = "1"
@@ -14,3 +14,4 @@ log = "0.4.0"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 chrono="0.4.23"
+proptest = "1"

@@ -1,9 +1,9 @@
 #![allow(dead_code, unused_variables, unused_imports)]
+use chrono;
 use log::debug;
 use serde_json::Value;
 use std::ops::Add;
 use std::time::SystemTime;
-use chrono;
 
 #[derive(Debug, PartialEq, PartialOrd)]
 pub struct Survey {
@@ -27,7 +27,7 @@ pub struct State {
     pub completed: bool,
     pub result: f32,
     pub description: String,
-    pub user_id: u32
+    pub user_id: u32,
 }
 
 impl Survey {
@@ -67,7 +67,7 @@ impl Survey {
 impl State {
     fn completed(&mut self) {
         self.completed = true;
-        self.datetime= chrono::offset::Utc::now().to_string();
+        self.datetime = chrono::offset::Utc::now().to_string();
         self.read_survey();
     }
 
@@ -104,9 +104,9 @@ impl State {
         let mut vec_total: Vec<u32> = Vec::default();
         let mut sum: u32 = 0;
         let mut count: u32 = 0;
-        let mut is_found_user_in_file=false;
-        const ONE:u32=1;
-        const ZERO:u32=0;
+        let mut is_found_user_in_file = false;
+        const ONE: u32 = 1;
+        const ZERO: u32 = 0;
         for item_type_survey in 0..themes.as_array().unwrap().len() {
             let name = themes[item_type_survey].get("name").unwrap();
             let questions = themes[item_type_survey].get("questions").unwrap();
@@ -128,41 +128,51 @@ impl State {
                         .enumerate()
                         .for_each(|(_j, item_type_responses)| {
                             if item_type_responses["respondent_id"] == self.user_id {
-                                is_found_user_in_file=true;
-                                let verifed_response_content=item_type_responses["response_content"]
-                                        .as_str()
-                                        .unwrap_or("0")
-                                        .parse::<u32>()                                        
-                                        .unwrap_or(0);
+                                is_found_user_in_file = true;
+                                let verifed_response_content = item_type_responses
+                                    ["response_content"]
+                                    .as_str()
+                                    .unwrap_or("0")
+                                    .parse::<u32>()
+                                    .unwrap_or(0);
                                 let _ = &vec_sum.push(verifed_response_content.clone());
-                                if !verifed_response_content.eq(&ZERO){
+                                if !verifed_response_content.eq(&ZERO) {
                                     count = count.add(ONE);
                                 }
                             }
                         });
-                       
                 });
-                 
-            if !is_found_user_in_file{                    
-                    self.description=format!("Failed, not found user in a current survey:{}",&self.survey.name);      
-                break;                                           
-            }else{
-                self.description=format!("Successed, found user in a current survey:{}",&self.survey.name);      
+
+            if !is_found_user_in_file {
+                self.description = format!(
+                    "Failed, not found user in a current survey:{}",
+                    &self.survey.name
+                );
+                break;
+            } else {
+                self.description = format!(
+                    "Successed, found user in a current survey:{}",
+                    &self.survey.name
+                );
             }
             sum = vec_sum.iter().sum::<u32>();
 
             debug!(
                 "Sum rates per question-type of:{} for user({}) is {:?}",
-                name,&self.user_id, &sum
+                name, &self.user_id, &sum
             );
             let _ = &vec_total.push(sum);
         }
-        if is_found_user_in_file{
+        if is_found_user_in_file {
             let total = &vec_total.iter().sum::<u32>();
-            debug!("For user({}) the total number is {}",&self.user_id, &total);
-            debug!("For user({}) the average number is {:.2}", &self.user_id, (*total as f32/ count as f32) as f32);
-            return *total as f32 / count as f32
-        }        
+            debug!("For user({}) the total number is {}", &self.user_id, &total);
+            debug!(
+                "For user({}) the average number is {:.2}",
+                &self.user_id,
+                (*total as f32 / count as f32) as f32
+            );
+            return *total as f32 / count as f32;
+        }
         return 0.0;
     }
 

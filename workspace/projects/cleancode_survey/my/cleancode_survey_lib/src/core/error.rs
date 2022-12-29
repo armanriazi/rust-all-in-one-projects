@@ -1,8 +1,6 @@
 #![allow(dead_code, unused_variables)]
 use std::fmt::{self, Formatter};
 
-
-
 #[derive(Debug)]
 pub enum StringError {
     StringParse(std::string::ParseError),
@@ -30,12 +28,15 @@ pub enum CustomError {
 impl fmt::Display for SurveyValidationError {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         match *self {
-
-                SurveyValidationError::InvalidFormat => write!(f, "SurveyValidation:InvalidFormat Error"),
-                SurveyValidationError::InvalidInput=> write!(f, "SurveyValidation:InvalidInput Error"),
-                SurveyValidationError::MismatchedIndex=> write!(f, "SurveyValidation:MismatchedIndex Error"),
+            SurveyValidationError::InvalidFormat => {
+                write!(f, "SurveyValidation:InvalidFormat Error")
+            }
+            SurveyValidationError::InvalidInput => write!(f, "SurveyValidation:InvalidInput Error"),
+            SurveyValidationError::MismatchedIndex => {
+                write!(f, "SurveyValidation:MismatchedIndex Error")
             }
         }
+    }
 }
 // Allow the use of "{}" format specifier
 impl fmt::Display for CustomError {
@@ -44,7 +45,9 @@ impl fmt::Display for CustomError {
             CustomError::String(_) => write!(f, "\nString Error"),
             CustomError::SerdeJson(ref cause) => write!(f, "\nSerdeJson Error: {}", cause),
             CustomError::IO(ref cause) => write!(f, "\nIO Error: {}", cause),
-            CustomError::SurveyValidation(ref cause) => write!(f, "\nSurveyValidation Error: {}", cause),
+            CustomError::SurveyValidation(ref cause) => {
+                write!(f, "\nSurveyValidation Error: {}", cause)
+            }
             CustomError::Other => write!(f, "\nUnknown error!"),
             CustomError::InvalidOption(_) => write!(f, "\nInvalid Option!"),
         }

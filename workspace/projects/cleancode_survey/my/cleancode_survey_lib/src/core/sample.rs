@@ -2,7 +2,6 @@ use serde_json::json;
 
 use super::error::CustomError;
 
-
 pub fn sample_json_data_from_module() -> Result<serde_json::Value, CustomError> {
     Ok(json!({
             "survey_result_detail": {
