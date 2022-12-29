@@ -4,6 +4,7 @@ edition = "2021"
 name = "cleancode_survey_bin"
 publish = false
 version = "0.0.0"
+author="ArmanRiazi"
 
 [dependencies]
 cleancode_survey_lib = { path = "../cleancode_survey_lib"}

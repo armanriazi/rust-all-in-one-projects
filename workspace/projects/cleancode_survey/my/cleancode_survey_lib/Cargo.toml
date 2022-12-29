@@ -2,6 +2,7 @@
 edition = "2021"
 name = "cleancode_survey_lib"
 version = "0.1.0"
+author="ArmanRiazi"
 
 [dev-dependencies]
 proptest = "1"

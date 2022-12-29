@@ -1,3 +1,6 @@
-pub mod string;
+pub mod filereader;
 pub mod error;
-pub mod factory;
+pub mod boradspace;
+pub mod game;
+pub mod pacman;
+

@@ -14,7 +14,7 @@ use process_line_lib::process_lines;
 ///
 ///```cargo run  -- arman  -- readme.txt```
 ///
-/// ```cargo run -q -p process_line_bin --bin process_line_main_bin```
+/// ```cargo run -q -p process_line_bin --bin process_line_main_bin -- arman  -- /mnt/home/rust-all-in-one-projects/workspace/projects/process_line/rust-in-action/process_line_bin/readme.txt```
 ///
 /// ```cargo doc  --package process_line_bin --message-format short --no-deps --open --color always```
 ///
@@ -60,9 +60,9 @@ use process_line_lib::process_lines;
  let input = args.value_of("input").unwrap_or("-");
 
  if input == "-" {
-    let stdin = io::stdin();
-    let reader = stdin.lock();
-    process_lines(reader, re);
+      let stdin = io::stdin();
+      let reader = stdin.lock();
+      process_lines(reader, re);
     } else {
     let f = File::open(input).unwrap();
     let reader = BufReader::new(f);
