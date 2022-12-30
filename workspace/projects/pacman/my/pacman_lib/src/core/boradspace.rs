@@ -30,7 +30,7 @@ impl Board {
     }
 
 
-    pub fn  set_dimensions(&self, dimensions:(isize,isize)) {
+    pub fn  set_dimensions(&mut self, dimensions:(isize,isize)) {
       self.dimensions = dimensions;
     }
 
@@ -41,7 +41,7 @@ impl Board {
        false
     }
 
-    pub fn  occupy_xy(&self,xy:(isize,isize)) -> bool {
+    pub fn  occupy_xy(&mut self,xy:(isize,isize)) -> bool {
       // if !self.cells[xy.0]{
       //    self.cells = []
       // }
@@ -72,7 +72,7 @@ impl Board {
       }
        false
     }
-    pub fn  vacant_xy(&self,xy:(isize,isize)) -> bool {
+    pub fn  vacant_xy(&mut self,xy:(isize,isize)) -> bool {
       // if !self.cells[xy.0] { 
       //   self.cells[xy.0] = [];
       // }

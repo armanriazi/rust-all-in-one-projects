@@ -64,7 +64,10 @@ impl Pacman{
           self.boardObj.occupy_xy((dx,dy - 1 ));
           self.xy.1 -= 1;
           return true;
-        }        
+        }   
+        &_ =>{
+          return false;
+        }     
       }
     }
 
@@ -73,7 +76,7 @@ impl Pacman{
         return false;
       }
       
-      let faceIterIndex = FACES.iter().enumerate().filter(|(i,&s)| s.eq(self.face.as_str()));
+      let mut faceIterIndex = FACES.iter().enumerate().filter(|(i,&s)| s.eq(self.face.as_str()));
         if let Some(face_index)=faceIterIndex.next(){
           let found_index=face_index.0.to_string().parse::<isize>().unwrap();
           if (found_index - 1 < 0_isize) {
@@ -91,10 +94,10 @@ impl Pacman{
         return false;
       }
       
-      let faceIterIndex = FACES.iter().enumerate().filter(|(i,&s)| s.eq(self.face.as_str()));
+      let mut faceIterIndex = FACES.iter().enumerate().filter(|(i,&s)| s.eq(self.face.as_str()));
         if let Some(face_index)=faceIterIndex.next(){
           let found_index=face_index.0.to_string().parse::<isize>().unwrap();
-          if (found_index + 1 > 3_isize) {
+          if found_index + 1 > 3_isize {
              self.face = FACES[0].to_string();
           } else {
             self.face = FACES[face_index.0 + 1].to_string()
@@ -126,7 +129,8 @@ impl Pacman{
   pub  fn run(&mut self,cmd:String) ->bool{
   
       if cmd.clone().starts_with("PLACE") {
-        let xy_face:Vec<&str> = cmd.replace("PLACE ", "").split(",").collect();
+        let replaced=cmd.as_str().replace("PLACE ", "");
+        let xy_face:Vec<&str> = replaced.split(",").collect();
         self.place((xy_face[0].parse::<isize>().unwrap(), xy_face[1].parse::<isize>().unwrap()), xy_face[2].to_string());
       }
       if cmd.contains("MOVE") {

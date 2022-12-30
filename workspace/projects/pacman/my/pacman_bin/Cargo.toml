@@ -27,3 +27,4 @@ doc = true
 name = "pacman_main_bin"
 path = "src/pacman_main_bin.rs"
 test = true
+

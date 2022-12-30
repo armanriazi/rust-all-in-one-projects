@@ -1,7 +1,6 @@
 #![allow(dead_code, unused_variables, unused_imports)]
 
-
-use pacman_lib::core::game::Game;
+use pacman_lib::core::stategame::{self, Message};
 use pacman_lib::{core::error::CustomError};
 use log::{debug, error, log_enabled, info, Level};
 use env_logger::{Builder, Target};
@@ -46,17 +45,24 @@ use array2d::{Array2D, Error};
 
 #[allow(dead_code)]
 #[allow(unused_mut)]
-pub fn ff() -> Result<(), CustomError> {
+pub fn main() -> Result<(), CustomError> {
 
-    console.log("🦀 Rust + 🕸 Wasm = ❤");
+ 
+
+    init_app();
 
     survey_init_env_logger(true);
 
     info!("Starting Up...");
 
-    let gameObj = Game::new((5,5));
+    state.process(Message::IsCompleted(false));
+    state.process(Message::NewBorad(5_isize,5_isize));    
+    state.process(Message::Echo(String::from(format!(
+        "Making model(updated dimension successfuly):{:?}",
+        (5,5)
+    ))));
+    state.process(Message::IsCompleted(true));
 
-    gameObj.play("sample1");
 
 
     Ok(())
@@ -80,72 +86,77 @@ pub fn survey_init_env_logger(is_enable:bool) {
     }
 }
 
-
+fn init_app() -> impl std::process::Termination {
+    println!("🦀 Rust + 🕸 Wasm = ❤");
+    let machine_kind = if cfg!(unix) {
+        println!("I'm running on a {} machine!", "unix");
+        std::process::ExitCode::SUCCESS
+    } else if cfg!(windows) {
+        println!("I'm running on a {} machine!", "windows");
+        std::process::ExitCode::SUCCESS
+    } else {
+        println!("I'm running on a {} machine!", "unknown");
+        std::process::ExitCode::FAILURE
+    };
+}
 //---
 
+#[test]
+fn test(){
+        let prefilled = Array2D::filled_with(42, 2, 3);
+    assert_eq!(prefilled.num_rows(), 2);
+    assert_eq!(prefilled.num_columns(), 3);
+    assert_eq!(prefilled[(0, 0)], 42);
 
-#[cfg(test)]
-mod tests {
-use super::*;
-use pretty_assertions::assert_eq;
-use pretty_assertions::{assert_eq, assert_ne};
-    #[test]
-    fn main(){
-         let prefilled = Array2D::filled_with(42, 2, 3);
-        assert_eq!(prefilled.num_rows(), 2);
-        assert_eq!(prefilled.num_columns(), 3);
-        assert_eq!(prefilled[(0, 0)], 42);
+    // Create an array from the given rows. You can also use columns
+    // with the `columns` function
+    let rows = vec![vec![1, 2, 3], vec![4, 5, 6]];
+    let from_rows = Array2D::from_rows(&rows)?;
+    assert_eq!(from_rows.num_rows(), 2);
+    assert_eq!(from_rows.num_columns(), 3);
+    assert_eq!(from_rows[(1, 1)], 5);
 
-        // Create an array from the given rows. You can also use columns
-        // with the `columns` function
-        let rows = vec![vec![1, 2, 3], vec![4, 5, 6]];
-        let from_rows = Array2D::from_rows(&rows)?;
-        assert_eq!(from_rows.num_rows(), 2);
-        assert_eq!(from_rows.num_columns(), 3);
-        assert_eq!(from_rows[(1, 1)], 5);
+    // Create an array from a flat Vec of elements in row major or
+    // column major order.
+    let column_major = vec![1, 4, 2, 5, 3, 6];
+    let from_column_major =
+        Array2D::from_column_major(&column_major, 2, 3)?;
+    assert_eq!(from_column_major.num_rows(), 2);
+    assert_eq!(from_column_major.num_columns(), 3);
+    assert_eq!(from_column_major[(1, 1)], 5);
 
-        // Create an array from a flat Vec of elements in row major or
-        // column major order.
-        let column_major = vec![1, 4, 2, 5, 3, 6];
-        let from_column_major =
-            Array2D::from_column_major(&column_major, 2, 3)?;
-        assert_eq!(from_column_major.num_rows(), 2);
-        assert_eq!(from_column_major.num_columns(), 3);
-        assert_eq!(from_column_major[(1, 1)], 5);
+    // Implements `Eq` if the element type does.
+    assert_eq!(from_rows, from_column_major);
 
-        // Implements `Eq` if the element type does.
-        assert_eq!(from_rows, from_column_major);
+    // Index into an array using a tuple of usize to access or alter
+    // the array.
+    let rows = vec![vec![1, 2, 3], vec![4, 5, 6]];
+    let mut array = Array2D::from_rows(&rows)?;
+    array[(1, 1)] = 100;
 
-        // Index into an array using a tuple of usize to access or alter
-        // the array.
-        let rows = vec![vec![1, 2, 3], vec![4, 5, 6]];
-        let mut array = Array2D::from_rows(&rows)?;
-        array[(1, 1)] = 100;
+    // Convert the array back into a nested Vec using `as_rows` or
+    // `as_columns`.
+    let array_rows = array.as_rows();
+    assert_eq!(array_rows, vec![vec![1, 2, 3], vec![4, 100, 6]]);
 
-        // Convert the array back into a nested Vec using `as_rows` or
-        // `as_columns`.
-        let array_rows = array.as_rows();
-        assert_eq!(array_rows, vec![vec![1, 2, 3], vec![4, 100, 6]]);
+    // Convert the array back into a flat Vec using `as_row_major` or
+    // `as_column_major`.
+    let array_column_major = array.as_column_major();
+    assert_eq!(array_column_major, vec![1, 4, 2, 100, 3, 6]);
 
-        // Convert the array back into a flat Vec using `as_row_major` or
-        // `as_column_major`.
-        let array_column_major = array.as_column_major();
-        assert_eq!(array_column_major, vec![1, 4, 2, 100, 3, 6]);
-
-        // Iterate over a single row or column
-        println!("First column:");
-        for element in array.column_iter(0)? {
-            println!("{}", element);
-        }
-
-        // Iterate over all rows or columns.
-        println!("All elements:");
-        for row_iter in array.rows_iter() {
-            for element in row_iter {
-                print!("{} ", element);
-            }
-            println!();
-        }
-            
+    // Iterate over a single row or column
+    println!("First column:");
+    for element in array.column_iter(0)? {
+        println!("{}", element);
     }
+
+    // Iterate over all rows or columns.
+    println!("All elements:");
+    for row_iter in array.rows_iter() {
+        for element in row_iter {
+            print!("{} ", element);
+        }
+        println!();
+    }
+        
 }
