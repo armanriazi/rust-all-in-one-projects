@@ -1,0 +1,4 @@
+
+```
+console.log("🦀 Rust + 🕸 Wasm = ❤");
+```

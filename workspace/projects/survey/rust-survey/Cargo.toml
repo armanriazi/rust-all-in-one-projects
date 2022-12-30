@@ -1,0 +1,18 @@
+[package]
+edition = "2021"
+name = "rust-survey-json"
+version = "0.1.0"
+authors = ["Arman <armanriyazi.github.io@gmail.com>"]
+description = "A collection of asesome projects"
+readme = "README.md"
+license = "MPL-2.0"
+homepage = "https://armanriazi.github.io/site/public/programming/rust/rust"
+repository = "https://github.com/armanriazi/armanriazi-awesome-rust"
+keywords = ["api","rest","survey","json", "filter"]
+categories = ["development-tools", "accessibility", "json","parsing"]
+
+[workspace]
+members = [
+    "rust-survey-json_bin",
+    "rust-survey-json_lib",    
+]

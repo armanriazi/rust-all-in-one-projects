@@ -1,5 +1,0 @@
-
-[submodule "armanriazi/rust-all-in-one-2022-archived"]
-	path = armanriazi/rust-all-in-one-2022-archived
-	url = https://github.com/armanriazi/rust-all-in-one-2022-archived.git
-	shallow = true

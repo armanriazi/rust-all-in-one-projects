@@ -5,8 +5,8 @@
 
 Contributions are always welcome! Please use the following guidelines when contributing to `rust-all-in-one-projects`
 
-1. Fork `rust-all-in-one`
-2. Clone your fork (`git clone https://github.com/$YOUR_USERNAME/rust-all-in-one && cd rust-all-in-one-projects`)
+1. Fork `rust-all-in-one-projects`
+2. Clone your fork (`git clone https://github.com/$YOUR_USERNAME/rust-all-in-one-projects && cd rust-all-in-one-projects`)
 3. Create new branch (`git checkout -b new-branch`)
 4. Make your changes, and commit (`git commit -am "your message"`)
  * I use a [conventional](https://github.com/ajoslin/conventional-changelog/blob/a5505865ff3dd710cf757f50530e73ef0ca641da/conventions/angular.md) changelog format so I can update my changelog using [clog](https://github.com/thoughtram/clog)

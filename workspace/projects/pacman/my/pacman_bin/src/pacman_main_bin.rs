@@ -1,6 +1,7 @@
 #![allow(dead_code, unused_variables, unused_imports)]
 
 
+use pacman_lib::core::game::Game;
 use pacman_lib::{core::error::CustomError};
 use log::{debug, error, log_enabled, info, Level};
 use env_logger::{Builder, Target};
@@ -47,14 +48,13 @@ use array2d::{Array2D, Error};
 #[allow(unused_mut)]
 pub fn ff() -> Result<(), CustomError> {
 
+    console.log("🦀 Rust + 🕸 Wasm = ❤");
 
     survey_init_env_logger(true);
 
     info!("Starting Up...");
 
-    const GameModel = require("./src/models/GameModel");
-
-    const gameObj = GameModel:new((5,5));
+    let gameObj = Game::new((5,5));
 
     gameObj.play("sample1");
 

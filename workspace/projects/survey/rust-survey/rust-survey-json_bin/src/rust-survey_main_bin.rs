@@ -1,6 +1,6 @@
 #![allow(dead_code, unused_variables, unused_imports)]
-use cleancode_survey_lib::core::factory::json_factory;
-use cleancode_survey_lib::{core::error::CustomError, core::sample::*};
+use rust_survey_json_lib::core::factory::json_factory;
+use rust_survey_json_lib::{core::error::CustomError, core::sample::*};
 use env_logger::{Builder, Target};
 use log::{debug, error, info, log_enabled, Level};
 use std::io::BufReader;
@@ -13,31 +13,64 @@ use std::{env::args, fs::File};
 /// ## Commands
 ///
 ///
-/// ```RUST_LOG=INFO cargo run  -p cleancode_survey_bin --bin 1 cleancode_survey_main_bin file workspace/projects/cleancode_survey/my/cleancode_survey_bin/data/1.json workspace/projects/cleancode_survey/my/cleancode_survey_bin/data/2.json```
+/// ```RUST_LOG=INFO cargo run  -p rust-survey-json_bin --bin rust-survey_main_bin 1 file /mnt/home/rust-all-in-one-projects/workspace/projects/survey/rust-survey/data/1.json /mnt/home/rust-all-in-one-projects/workspace/projects/survey/rust-survey/data/2.json```
 ///
-/// ```cargo doc  --package cleancode_survey_bin --message-format short --no-deps --open --color always```
+/// ```cargo doc  --package rust-survey-json_bin --message-format short --no-deps --open --color always```
 ///
-/// ```cargo test --doc  --package cleancode_survey_bin```
+/// ```cargo test --doc  --package rust-survey-json_lib```
 ///
 /// ## What
-/// `TODO`
+/// `A finder on json data for calculate the rate of users- there are 3 mode gain access to the json content"`
 ///
 /// ## How
 /// `TODO`
 ///
 /// # Arguments
 ///
-/// * `Arg1` - This is the [your type] to [your verb] the [your struct/func name]
+/// * `Arg1` - This is the uniqe empty type main function
 ///
 /// # Return
-/// `nothing`
-///
-/// ## Example
-/// `nothing`
-///
+/// 
+/// ```no_run,compile_file
+/// I'm running on a unix machine!
+/// `Making model(updated key successfuly):\`name\``
+/// `Making model(updated key successfuly):\`participant_count\``
+/// `Making model(updated key successfuly):\`response_rate\``
+/// `Making model(updated key successfuly):\`submitted_response_count\``
+/// `Making model(updated key successfuly):\`themes\``
+/// `Making model(updated key successfuly):\`url\``
+/// 
+/// survey: Survey {
+///         name: `\`Simple Survey\``,
+///         url: `\`/survey_results/1\``,
+///         participant_count: 6,
+///         response_rate: 0.8333333333333334,
+///         submitted_response_count: 5,
+///     },
+///     datetime: `2022-12-29 18:49:27.644034577 UTC`,
+///     completed: true,
+///     result: 0.0,
+///     description: `Failed, not found user in a current survey:\`Simple Survey\``,
+///     user_id: 100,
+/// }
+/// 
+/// survey: Survey {
+///         name: `\`Simple Survey\``,
+///         url: `\`/survey_results/1\``,
+///         participant_count: 6,
+///         response_rate: 0.8333333333333334,
+///         submitted_response_count: 5,
+///     },
+///     datetime: `2022-12-29 18:23:14.971810866 UTC`,
+///     completed: true,
+///     result: 4.6,
+///     description: `Successed, found user in a current survey:\`Simple Survey\``,
+///     user_id: 1,
+/// }
+/// 
+/// ```
+/// 
 
-/// cargo run
-/// RUST_LOG=INFO time cargo run cleancode_survey ../data/1.json
 #[allow(dead_code)]
 #[allow(unused_mut)]
 pub fn main() -> Result<(), CustomError> {
@@ -52,21 +85,21 @@ pub fn main() -> Result<(), CustomError> {
     let mut mode = String::default();
     let mut user_id: u32 = 0;
     let mut file_name = String::default();
-
-    if (&args).len() <= 1 {
+     
+    if (&args).len() <= 2 {
         info!("** Please select a runner mode\n Help(file path transaction_list, or macrojson transaction_list)\n Default is cargo run macrojson **\n");
         args.push("macrojson".to_owned());
-    } else {
-        user_id = (&args[1]).trim().parse::<u32>().unwrap_or(0);
+    } else {        
         mode = (&args[2]).trim().to_lowercase();
+    }
+    user_id = (&args[1]).trim().parse::<u32>().unwrap_or(0);
+        if &user_id <= &0 {
+            dbg!("Select user id > 0");
+            process::exit(1);
     }
     info!("UserId: {:?}\n", user_id.clone());
     info!("Mode: {:?}\n", mode.clone());
 
-    if &user_id <= &0 {
-        dbg!("Select user id > 0");
-        process::exit(1);
-    }
     if &mode == "file" {
         for (i, arg) in args.iter().enumerate() {
             if arg.find("json").is_some() {

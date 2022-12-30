@@ -7,12 +7,12 @@
 
 set -e
 
-DOCKER_TAG="rust-all-in-one:Dockerfile"
+DOCKER_TAG="rust-all-in-one-projects:Dockerfile"
 
 # DOCKER_DIR is the directory containing this docker script and the Dockerfile
 DOCKER_DIR=$(dirname $(readlink -f ${BASH_SOURCE}))
 ### rust-all-in-one_BASE_DIR is the base directory of the rust-all-in-one repository.
-rust-all-in-one_BASE_DIR=$(readlink -f ${DOCKER_DIR}/.. )
+rust-all-in-one-projects_BASE_DIR=$(readlink -f ${DOCKER_DIR}/.. )
 
 ### Always run this script with the `docker` directory as the working directory.
 cd ${DOCKER_DIR}
@@ -24,8 +24,8 @@ cd ${DOCKER_DIR}
 #
 # The DISPLAY and X11 arguments allow QEMU to create and run in a graphical window.
 docker run \
-    -v ${rust-all-in-one_BASE_DIR}:/rust-all-in-one \
-    -w="/rust-all-in-one" \
+    -v ${rust-all-in-one_BASE_DIR}:/rust-all-in-one-projects \
+    -w="/rust-all-in-one-projects" \
     -u="$(id -u):$(id -g)" \
     --network host \
     -e DISPLAY=$DISPLAY \

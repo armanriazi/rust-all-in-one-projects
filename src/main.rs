@@ -1,4 +1,3 @@
-#![crate_name = "rust_all_in_one"]
 #![allow(dead_code, unused_variables)]
 
 

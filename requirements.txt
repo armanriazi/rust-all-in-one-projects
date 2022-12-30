@@ -1,1 +1,1 @@
-rust-all-in-one
+rust-all-in-one-projects

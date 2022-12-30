@@ -7,11 +7,11 @@
 
 set -e
 
-DOCKER_TAG="rust-all-in-one:Dockerfile"
+DOCKER_TAG="rust-all-in-one-projects:Dockerfile"
 
 # DOCKER_DIR is the directory containing this docker script and the Dockerfile
 DOCKER_DIR=$(dirname $(readlink -f ${BASH_SOURCE}))
-### rust-all-in-one_BASE_DIR is the base directory of the rust-all-in-one repository.
+### rust-all-in-one_BASE_DIR is the base directory of the rust-all-in-one-projects repository.
 rust-all-in-one_BASE_DIR=$(readlink -f ${DOCKER_DIR}/.. )
 
 ### Always run this script with the `docker` directory as the working directory.

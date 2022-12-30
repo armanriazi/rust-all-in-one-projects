@@ -4,73 +4,67 @@ use super::boradspace::Board;
 
 const FACES: [&str; 4] = ["NORTH", "EAST", "SOUTH", "WEST"];
 
+ #[derive(Debug,PartialEq)]
 pub struct Pacman {
-  boardObj :Board,
-  xy:(usize,usize),
-  face:String,
-  isPlaced :bool
+  pub boardObj :Board,
+  pub xy:(isize,isize),
+  pub face:String,
+  pub isPlaced :bool
 }
 
 impl Pacman{
-  pub fn new(&mut self,boardObj:Board) {
-      self.boardObj = boardObj;
-      self.xy=(0,0);
-      self.face = String::default();
-      self.isPlaced = false;
-    }
-
-  pub  fn place(&mut self,xy:(usize,usize), face:String ) ->bool{
-      if !self.boardObj.can_occupy_xy(xy) {
-        return false;
+  pub fn new(boardObj:&Board) -> Self {
+      Pacman{
+        boardObj : boardObj.clone(),
+        xy:(0_isize,0_isize),
+        face : String::default(),
+        isPlaced : false,
       }
-      self.xy=xy;
-      self.face = face;
-      self.isPlaced = true;
-      self.boardObj.occupy_xy(xy);
-      true
     }
 
   pub fn move_run(&mut self) -> bool{
       if !self.isPlaced {
         return false;
       }
-      match self.face.as_str() {
-        "NORTH"=> {
-          if !self.boardObj.can_occupy_xy({ x: self.xy.x, y: self.y + 1 }){
-            return false;
-          }
-          self.boardObj.vacant_xy({ x: self.x, y: self.y });
-          self.boardObj.occupy_xy({ x: self.x, y: self.y + 1 });
-          self.y += 1;
-          return true;
-        }
-        "SOUTH"=>{
-          if !self.boardObj.can_occupy_xy({ x: self.x, y: self.y - 1 }){
-            return false;
-          }
-          self.boardObj.vacant_xy({ x: self.x, y: self.y });
-          self.boardObj.occupy_xy({ x: self.x, y: self.y - 1 });
-          self.xy.1 -= 1;
-          return true;
-        }
+      let (dx,dy)=self.xy; //destruct x,y
+      match self.face.as_str() {        
         "EAST"=>{
-          if !self.boardObj.can_occupy_xy({ x: self.x + 1, y: self.y }){
+          if !self.boardObj.can_occupy_xy((dx+1,dy)){
             return false;
           }
-          self.boardObj.vacant_xy({ x: self.x, y: self.y });
-          self.boardObj.occupy_xy({ x: self.x + 1, y: self.y });
+          self.boardObj.vacant_xy((dx,dy));
+          self.boardObj.occupy_xy((dx+1,dy));
           self.xy.0 += 1;
           return true;
         }
         "WEST"=>{
-          if !self.boardObj.can_occupy_xy({ x: self.x - 1, y: self.y }){
+          if !self.boardObj.can_occupy_xy((dx-1,dy)){
             return false;
           }
-          self.boardObj.vacant_xy({ x: self.x, y: self.y });
-          self.boardObj.occupy_xy({ x: self.x - 1, y: self.y });
+          self.boardObj.vacant_xy((dx,dy));
+          self.boardObj.occupy_xy((dx-1,dy));
           self.xy.0 -= 1;
           return true;
         }
+        "NORTH"=> {
+          
+          if !self.boardObj.can_occupy_xy((dx,dy + 1 )){
+            return false;
+          }
+          self.boardObj.vacant_xy((dx,dy));
+          self.boardObj.occupy_xy((dx,dy + 1 ));
+          self.xy.1 += 1;
+          return true;
+        }
+        "SOUTH"=>{
+          if !self.boardObj.can_occupy_xy((dx,dy - 1 )){
+            return false;
+          }
+          self.boardObj.vacant_xy((dx,dy));
+          self.boardObj.occupy_xy((dx,dy - 1 ));
+          self.xy.1 -= 1;
+          return true;
+        }        
       }
     }
 
@@ -78,42 +72,62 @@ impl Pacman{
       if !self.isPlaced{ 
         return false;
       }
-      const faceIndex = FACES[face] => face == self.face;
-      if (faceIndex - 1 < 0) {
-        self.face = FACES[3];
-      } else {
-        self.face = FACES[faceIndex - 1]
-      }
-      return true    
+      
+      let faceIterIndex = FACES.iter().enumerate().filter(|(i,&s)| s.eq(self.face.as_str()));
+        if let Some(face_index)=faceIterIndex.next(){
+          let found_index=face_index.0.to_string().parse::<isize>().unwrap();
+          if (found_index - 1 < 0_isize) {
+             self.face = FACES[3].to_string();
+          } else {
+            self.face = FACES[face_index.0 - 1].to_string()
+          }
+        }            
+     true    
   }
 
   pub  fn right(&mut self) ->bool {
-      if !self.isPlaced{
+        
+    if !self.isPlaced{ 
         return false;
       }
-      const faceIndex = FACES[face] => face == self.face;
-      if (faceIndex + 1 > 3) {
-        self.face = FACES[0];
-      } else {
-        self.face = FACES[faceIndex + 1];
-      }
-      true
-    }
+      
+      let faceIterIndex = FACES.iter().enumerate().filter(|(i,&s)| s.eq(self.face.as_str()));
+        if let Some(face_index)=faceIterIndex.next(){
+          let found_index=face_index.0.to_string().parse::<isize>().unwrap();
+          if (found_index + 1 > 3_isize) {
+             self.face = FACES[0].to_string();
+          } else {
+            self.face = FACES[face_index.0 + 1].to_string()
+          }
+        }            
+     true      
+  }
 
   pub fn report(&mut self)-> bool {
       if !self.isPlaced {
         return false;
-      }
-      const state = { x: self.x, y: self.y, face: self.face };
-      println!("report", state);
-      state    
+      }      
+    println!("report: {:?},{:?},{:?}", self.xy.0, self.xy.1, self.face);
+      //state    
+      true
     }
 
-  pub  fn run(&mut self,cmd:String) ->bool{
+  pub  fn place(&mut self,xy:(isize,isize), face:String ) ->bool{
+    if !self.boardObj.can_occupy_xy(xy) {
+      return false;
+    }
+    self.xy=xy;
+    self.face = face;
+    self.isPlaced = true;
+    self.boardObj.occupy_xy(xy);
+    true
+  }
 
-      if cmd.starts_with("PLACE") {
-        const xyFace = cmd.replace("PLACE ", "").split(",");
-        self.place({ x: xyFace[0], y: xyFace[1], face: xyFace[2] })
+  pub  fn run(&mut self,cmd:String) ->bool{
+  
+      if cmd.clone().starts_with("PLACE") {
+        let xy_face:Vec<&str> = cmd.replace("PLACE ", "").split(",").collect();
+        self.place((xy_face[0].parse::<isize>().unwrap(), xy_face[1].parse::<isize>().unwrap()), xy_face[2].to_string());
       }
       if cmd.contains("MOVE") {
         self.move_run();

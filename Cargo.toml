@@ -1,22 +1,28 @@
 [package]
-name = "rust-all-in-one"
-version = "0.1.0"
 edition = "2021"
-author="ArmanRiazi"
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+name = "rust-all-in-one-projects"
+version = "0.1.0"
+authors = ["Arman <armanriyazi.github.io@gmail.com>"]
+description = "A collection of asesome projects"
+readme = "README.md"
+license = "MPL-2.0"
+homepage = "https://armanriazi.github.io/site/public/programming/rust/rust"
+repository = "https://github.com/armanriazi/armanriazi-awesome-rust"
+keywords = ["api","rest","cargo","rust", "cryptocurrency"]
+categories = ["command-line-utilities", "config", "development-tools", "development-tools::cargo-plugins", "accessibility"]
 
 [workspace]
-
 members = [
-
 
     "workspace/shared",
 
 
     "workspace/projects/pacman/my/pacman_bin",
     "workspace/projects/pacman/my/pacman_lib",
-    "workspace/projects/cleancode_survey/my/cleancode_survey_bin",
-    "workspace/projects/cleancode_survey/my/cleancode_survey_lib",
+    "workspace/projects/pacman/my/pacman_test",
+
+    "workspace/projects/survey/rust-survey/rust-survey-json_bin",
+    "workspace/projects/survey/rust-survey/rust-survey-json_lib",
 
     "workspace/projects/file/rust-in-action/file_bin",
     "workspace/projects/file/rust-in-action/file_lib",
