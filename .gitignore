@@ -4,9 +4,6 @@ release/
 rls/
 *.o
 
-rust-all-in-one-projects/workspace/projects/pacman/my/pacman_bin/data/*
-
-
 .github/workflows/ci.yml
 .github/workflows/.travis.yml
 .github/workflows/coverage.yml

@@ -5,13 +5,13 @@
 // use log::{info,trace};
 
 use super::pacman::Pacman;
-use super::boradspace::Board;
+use super::boradspace::{BoardSpace};
 
 
 
  #[derive(Debug,PartialEq)]
 pub enum Message {
-    NewBorad(isize,isize),    
+    NewBorad((isize,isize)),    
     Echo(String),    
     IsCompleted(bool),
 }
@@ -34,13 +34,12 @@ pub enum Message {
   // }
   
  #[derive(Debug,PartialEq)]
-pub struct StateGame {
-  pub board:Board,
-  pub pacman:Pacman,  
+pub struct StateBoard {
+  pub board:BoardSpace,
   pub completed: bool,
 }
 
-impl StateGame{
+impl StateBoard{
 
     fn completed(&mut self) {
         self.completed = true;        
@@ -51,13 +50,9 @@ impl StateGame{
     }
 
     fn make_new_borad(&mut self,dimensions:(isize,isize)) { 
-         self.board=Board::new(&dimensions);
-         self.make_new_pacman();
+         self.board=BoardSpace::new(&dimensions);
     }
 
-    fn make_new_pacman(&mut self)  {    
-         self.pacman=Pacman::new(&self.board);
-    }
 
     fn echo(&self,s: String) {
         println!("{}", s);
@@ -66,7 +61,7 @@ impl StateGame{
    pub fn process(&mut self, message: Message) {
         match message {
             Message::IsCompleted(false) =>  self.incomplete(),            
-            Message::NewBorad(dx,dy) => self.make_new_borad((dx,dy)),                        
+            Message::NewBorad((dx,dy)) => self.make_new_borad((dx,dy)),                        
             Message::Echo(s) => self.echo(s),       
             Message::IsCompleted(true) =>  self.completed(),            
         }

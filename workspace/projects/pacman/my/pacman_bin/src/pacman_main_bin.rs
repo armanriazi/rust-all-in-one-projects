@@ -1,8 +1,9 @@
 #![allow(dead_code, unused_variables, unused_imports)]
 
-use pacman_lib::core::boradspace::Board;
-use pacman_lib::core::pacman::Pacman;
-use pacman_lib::core::stategame::{self, Message, StateGame};
+
+use pacman_lib::core::play::Play;
+use pacman_lib::core::stateboard::{Message as MessageStateBoard };
+use pacman_lib::core::statepacman::{Message as MessageStatePacman};
 use pacman_lib::{core::error::CustomError};
 use log::{debug, error, log_enabled, info, Level};
 use env_logger::{Builder, Target};
@@ -55,19 +56,10 @@ pub fn main() -> Result<(), CustomError> {
 
     info!("Starting Up...");
 
-    let mut state: StateGame= StateGame { 
-         board: Board::new(&(5_isize,5_isize)),
-         completed: false,
-         pacman: Pacman::new(&Board::new(&(5_isize,5_isize))),   
-    };
-
-    state.process(Message::IsCompleted(false));
-    state.process(Message::NewBorad(5_isize,5_isize));    
-    state.process(Message::Echo(String::from(format!(
-        "Making model(updated dimension successfuly):{:?}",
-        (5,5)
-    ))));
-    state.process(Message::IsCompleted(true));
+    let  mut play= Play{};
+    let _stateboard=Play::arrange_stateboard(&(5_isize,5_isize));
+    let _statepacman=Play::arrange_statepacman(_stateboard);
+    Play::play();
 
     Ok(())
 }

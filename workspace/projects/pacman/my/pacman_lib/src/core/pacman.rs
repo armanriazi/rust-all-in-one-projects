@@ -1,19 +1,19 @@
 #![allow(dead_code, unused_variables, unused_imports)]
 
-use super::boradspace::Board;
+use super::boradspace::BoardSpace;
 
 const FACES: [&str; 4] = ["NORTH", "EAST", "SOUTH", "WEST"];
 
  #[derive(Debug,PartialEq)]
 pub struct Pacman {
-  pub board :Board,
+  pub board :BoardSpace,
   pub xy:(isize,isize),
   pub face:String,
   pub is_placed :bool
 }
 
 impl Pacman{
-  pub fn new(board:&Board) -> Self {
+  pub fn new(board:&BoardSpace) -> Self {
       Pacman{
         board : board.clone(),
         xy:(0_isize,0_isize),

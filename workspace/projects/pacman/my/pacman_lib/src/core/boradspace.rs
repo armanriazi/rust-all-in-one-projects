@@ -9,15 +9,15 @@ pub struct XY {
 }
 
  #[derive(Debug,PartialEq,Clone)]
-pub struct Board {
+pub struct BoardSpace {
   default:(isize,isize),
   pub dimensions: (isize,isize),  
   pub cells:Array2D<isize>
 }
-impl Board {
+impl BoardSpace {
      
     pub fn new(dimensions:&(isize,isize)) ->Self {
-      Board{
+      BoardSpace{
           dimensions: dimensions.clone(),
           default: dimensions.clone(),
           cells : Array2D::filled_with(0, dimensions.0 as usize, dimensions.1 as usize)
