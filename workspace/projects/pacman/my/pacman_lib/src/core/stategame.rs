@@ -36,13 +36,12 @@ pub enum Message {
  #[derive(Debug,PartialEq)]
 pub struct StateGame {
   pub board:Board,
-  pub pacman:Pacman,
-  pub IsCompleted: bool,  
+  pub pacman:Pacman,  
   pub completed: bool,
 }
 
 impl StateGame{
-  
+
     fn completed(&mut self) {
         self.completed = true;        
     }

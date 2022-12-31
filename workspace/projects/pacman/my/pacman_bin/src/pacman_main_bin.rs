@@ -1,6 +1,8 @@
 #![allow(dead_code, unused_variables, unused_imports)]
 
-use pacman_lib::core::stategame::{self, Message};
+use pacman_lib::core::boradspace::Board;
+use pacman_lib::core::pacman::Pacman;
+use pacman_lib::core::stategame::{self, Message, StateGame};
 use pacman_lib::{core::error::CustomError};
 use log::{debug, error, log_enabled, info, Level};
 use env_logger::{Builder, Target};
@@ -15,7 +17,7 @@ use array2d::{Array2D, Error};
 /// ## Commands
 ///
 ///
-/// ```RUST_LOG=INFO cargo run  -p pacman_bin --bin pacman_main_bin file workspace/projects/pacman/my/pacman_bin/data/1.json```
+/// ```RUST_LOG=INFO cargo run  -p pacman_bin --bin pacman_main_bin file workspace/projects/pacman/my/pacman_bin/data/sample1.txt```
 ///
 /// ```cargo doc  --package pacman_bin --message-format short --no-deps --open --color always```
 ///
@@ -54,6 +56,12 @@ pub fn main() -> Result<(), CustomError> {
     survey_init_env_logger(true);
 
     info!("Starting Up...");
+
+    let mut state: StateGame= StateGame { 
+         board: Board::new(&(5_isize,5_isize)),
+         completed: false,
+         pacman: Pacman::new(&Board::new(&(5_isize,5_isize))),   
+    };
 
     state.process(Message::IsCompleted(false));
     state.process(Message::NewBorad(5_isize,5_isize));    
@@ -111,7 +119,7 @@ fn test(){
     // Create an array from the given rows. You can also use columns
     // with the `columns` function
     let rows = vec![vec![1, 2, 3], vec![4, 5, 6]];
-    let from_rows = Array2D::from_rows(&rows)?;
+    let from_rows = Array2D::from_rows(&rows).unwrap();
     assert_eq!(from_rows.num_rows(), 2);
     assert_eq!(from_rows.num_columns(), 3);
     assert_eq!(from_rows[(1, 1)], 5);
@@ -120,7 +128,7 @@ fn test(){
     // column major order.
     let column_major = vec![1, 4, 2, 5, 3, 6];
     let from_column_major =
-        Array2D::from_column_major(&column_major, 2, 3)?;
+        Array2D::from_column_major(&column_major, 2, 3).unwrap();
     assert_eq!(from_column_major.num_rows(), 2);
     assert_eq!(from_column_major.num_columns(), 3);
     assert_eq!(from_column_major[(1, 1)], 5);
@@ -131,7 +139,7 @@ fn test(){
     // Index into an array using a tuple of usize to access or alter
     // the array.
     let rows = vec![vec![1, 2, 3], vec![4, 5, 6]];
-    let mut array = Array2D::from_rows(&rows)?;
+    let mut array = Array2D::from_rows(&rows).unwrap();
     array[(1, 1)] = 100;
 
     // Convert the array back into a nested Vec using `as_rows` or
@@ -146,15 +154,15 @@ fn test(){
 
     // Iterate over a single row or column
     println!("First column:");
-    for element in array.column_iter(0)? {
-        println!("{}", element);
+    for element in array.column_iter(0).unwrap() {
+        println!("{:?}", element);
     }
 
     // Iterate over all rows or columns.
     println!("All elements:");
     for row_iter in array.rows_iter() {
         for element in row_iter {
-            print!("{} ", element);
+            print!("{:?} ", element);
         }
         println!();
     }

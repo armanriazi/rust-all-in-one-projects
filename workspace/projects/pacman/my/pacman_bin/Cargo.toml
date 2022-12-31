@@ -3,7 +3,7 @@ authors = ["Automatically generated"]
 edition = "2021"
 name = "pacman_bin"
 publish = false
-version = "0.0.0"
+version = "0.1.0"
 
 [dependencies]
 pacman_lib = { path = "../pacman_lib"}
