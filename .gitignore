@@ -4,6 +4,7 @@ release/
 rls/
 *.o
 
+*.txt
 
 
 .github/workflows/ci.yml
