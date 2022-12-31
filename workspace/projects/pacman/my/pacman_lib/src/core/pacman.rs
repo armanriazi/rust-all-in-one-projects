@@ -4,7 +4,7 @@ use super::boradspace::BoardSpace;
 
 const FACES: [&str; 4] = ["NORTH", "EAST", "SOUTH", "WEST"];
 
- #[derive(Debug,PartialEq)]
+ #[derive(Debug,PartialEq,Clone)]
 pub struct Pacman {
   pub board :BoardSpace,
   pub xy:(isize,isize),

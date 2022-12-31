@@ -1,37 +1,63 @@
-#![allow(dead_code, unused_variables, unused_imports)]
+// #![allow(dead_code, unused_variables, unused_imports)]
 
 
-use tokio::fs::File;
-use tokio::io::{self, AsyncReadExt};
+// use std::error::Error;
 
-pub struct FileReader;
+// use log::info;
+// use tokio::fs::File;
+// use tokio::io::{self, AsyncReadExt};
 
-impl FileReader{
-  #[tokio::main]
-  pub async fn file_reader(filepath:&str) -> io::Result<()> {
-      let mut f = File::open(filepath).await?;
-      let mut buffer = [0; 10];
+// use super::error::CustomError;
 
-      // read up to 10 bytes
-      let n = f.read(&mut buffer[..]).await?;
+//  #[derive(Debug,PartialEq)]
+// pub struct FileReader;
 
-      println!("The bytes: {:?}", &buffer[..n]);
-      Ok(())
-  }
-}
-// use std::fs;
+// impl FileReader{
+//   #[tokio::main]
+//   pub async fn file_reader(filepath:&str) -> Result<Vec<&str>,dyn Error> {
+//       let mut f = File::open(filepath).await?;
+//       //let mut buffer = [0; 1024];
+//       let mut buffer=String::new();
+//       // read up to 1024 bytes
+//       //let n = f.read(&mut buffer).await?;
+//       f.read_to_string(&mut buffer).await?;
 
-// pub let fileReader = async (fileName) => {
-  
-//   const filePath = "./commands/${fileName}.txt";
-//   if (await fs.existsSync(filePath)) {
-//     return await fs
-//       .readFileSync(filePath, 'utf8')
-//       .split('\n')
-//       .filter((line) => line !== '')
-//       .map((line) => line.trim());
+//       let u= buffer.split("\n").filter(|x| *x != "").collect::<Vec<_>>();
+     
+//       Ok(u)       
+      
 //   }
-//    None
 // }
+//   // #[tokio::main]
+//   // pub async fn file_reader<T: AsRef<str>>(filepath:T) -> Result<Vec<&'static str>,CustomError>{
+//   //     let mut f = File::open(filepath.as_ref()).await?;
+//   //     //let mut buffer = [0; 1024];
+//   //     let mut buffer=String::new();
+//   //     // read up to 1024 bytes
+//   //     //let n = f.read(&mut buffer).await?;
+//   //     f.read_to_string(&mut buffer).await?;
+
+//   //     let vec_buffer= buffer.split("\n").filter(|x| *x != "").collect::<Vec<_>>();
+     
+//   //     Ok(vec_buffer)
+      
+//   // }
+
+
+
+// // use std::fs;
+
+// // pub let fileReader = async (fileName) => {
+  
+// //   const filePath = "./commands/${fileName}.txt";
+// //   if (await fs.existsSync(filePath)) {
+// //     return await fs
+// //       .readFileSync(filePath, 'utf8')
+// //       .split('\n')
+// //       .filter((line) => line !== '')
+// //       .map((line) => line.trim());
+// //   }
+// //    None
+// // }
 
 

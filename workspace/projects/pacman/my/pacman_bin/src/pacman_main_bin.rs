@@ -1,7 +1,5 @@
 #![allow(dead_code, unused_variables, unused_imports)]
 
-
-use pacman_lib::core::filereader::FileReader;
 use pacman_lib::core::play::Play;
 use pacman_lib::core::stateboard::{Message as MessageStateBoard };
 use pacman_lib::core::statepacman::{Message as MessageStatePacman};
@@ -19,7 +17,7 @@ use array2d::{Array2D, Error};
 /// ## Commands
 ///
 ///
-/// ```RUST_LOG=INFO cargo run  -p pacman_bin --bin pacman_main_bin file "/mnt/home/rust-all-in-one-projects/workspace/projects/pacman/my/pacman_lib/src/core/commands/text-sample-0.txt"```
+/// ```RUST_LOG=INFO cargo run  -p pacman_bin --bin pacman_main_bin file /mnt/home/rust-all-in-one-projects/workspace/projects/pacman/my/pacman_lib/src/core/commands/text-sample-0.txt```
 ///
 /// ```cargo doc  --package pacman_bin --message-format short --no-deps --open --color always```
 ///
@@ -69,10 +67,10 @@ pub fn main() -> Result<(), CustomError> {
 
     let  mut play= Play{};
     let _stateboard=Play::arrange_stateboard(&(5_isize,5_isize));
-    let _statepacman=Play::arrange_statepacman(_stateboard);
-    Play::play();
-    let f=FileReader::file_reader(&file).unwrap();
-    info!("{:?}",f);
+    let mut _pacman=Play::arrange_statepacman(_stateboard);
+    
+    let _= Play::play(&file,&mut _pacman).unwrap();
+
     Ok(())
 }
 

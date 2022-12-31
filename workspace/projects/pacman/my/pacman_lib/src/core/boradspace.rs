@@ -2,11 +2,7 @@
 
 use array2d::{Array2D, Error};
 
- #[derive(Debug,PartialEq)]
-pub struct XY {
-  x:isize,
-  y:isize,
-}
+
 
  #[derive(Debug,PartialEq,Clone)]
 pub struct BoardSpace {
