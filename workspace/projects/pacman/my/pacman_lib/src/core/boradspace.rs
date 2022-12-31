@@ -1,6 +1,7 @@
 #![allow(dead_code, unused_variables, unused_imports)]
 
 use array2d::{Array2D, Error};
+use log::{debug, trace, info};
 
 
 
@@ -31,7 +32,7 @@ impl BoardSpace {
     }
 
     pub fn  can_occupy_xy(&self,xy:(isize,isize)) -> bool{
-      if self.is_xy_not_occupied(xy) && self.is_xy_in_board(xy) {
+      if self.is_xy_not_occuped(xy) && self.is_xy_in_board(xy) {       
         return true;
       }
        false
@@ -45,25 +46,54 @@ impl BoardSpace {
         return false;
       }
       self.cells[(xy.0 as usize,xy.1 as usize)] = 1;
+
+      info!("{:?}",self.cells[(xy.0 as usize,xy.1 as usize)]);
+      self.boardspace_report();
+      
       true
     }
 
 
+    pub fn boardspace_report(&self){
+     
+      for row_iter in self.cells.rows_iter() {
+        for element in row_iter {
+            trace!("\nBoardSpace_Report:{:?},", element);
+        }
+      }
+    }
 
-    pub fn  is_xy_not_occupied(&self,xy:(isize,isize)) -> bool {
-      // if !self.cells[xy.0] {
-      //   self.cells[xy.0] = [];
+    /// [TODO]
+    pub fn  is_xy_not_occuped(&self,xy:(isize,isize)) -> bool {
+      let (x,y)=xy;
+      // if !self.cells.row_iter(x).is_ok() {
+      //   self.cells.set_row_major(5,0) = [];
       // }
-
-      if !self.cells[(xy.0 as usize,xy.1 as usize)].count_zeros()<=0 {
+      if !self.cells[(xy.0 as usize,xy.1 as usize)].gt(&1_isize) { 
+        debug!(r#"{:?}"#,"true_is_xy_not_occupied");
         return true;
       }
+      debug!(r#"{:?}"#,"false_is_xy_not_occupied");
+       false
+    }
+    /// [TODO]
+    pub fn  is_xy_not_occupied(&self,xy:(isize,isize)) -> bool {
+      let (x,y)=xy;
+      // if !self.cells.row_iter(x).is_ok() {
+      //   self.cells.set_row_major(5,0) = [];
+      // }
+      if !self.cells[(xy.0 as usize,xy.1 as usize)].ge(&0_isize) { 
+        debug!(r#"{:?}"#,"true_is_xy_not_occupied");
+        return true;
+      }
+      debug!(r#"{:?}"#,"false_is_xy_not_occupied");
        false
     }
 
-
     pub fn  is_xy_in_board(&self,xy:(isize,isize))-> bool {
+       trace!(r#"{:?}"#,self.default.0);
       if xy.0 < self.default.0 && xy.1 < self.default.1 && xy.0 >= 0 && xy.1 >= 0 {
+         debug!(r#"{:?}"#,"true_is_xy_in_board");
         return true;
       }
        false

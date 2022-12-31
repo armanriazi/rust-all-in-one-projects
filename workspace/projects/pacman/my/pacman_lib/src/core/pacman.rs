@@ -1,5 +1,7 @@
 #![allow(dead_code, unused_variables, unused_imports)]
 
+use log::{debug, info};
+
 use super::boradspace::BoardSpace;
 
 const FACES: [&str; 4] = ["NORTH", "EAST", "SOUTH", "WEST"];
@@ -23,9 +25,12 @@ impl Pacman{
     }
 
   pub fn move_run(&mut self) -> bool{
+  
       if !self.is_placed {
+
         return false;
-      }
+      }          
+    
       let (dx,dy)=self.xy; //destruct x,y
       match self.face.as_str() {        
         "EAST"=>{
@@ -65,8 +70,9 @@ impl Pacman{
           self.xy.1 -= 1;
           return true;
         }   
-        &_ =>{
-          return false;
+        &_ =>{       
+            info!("{:?}","Other");
+            true
         }     
       }
     }
@@ -110,8 +116,10 @@ impl Pacman{
       if !self.is_placed {
         return false;
       }      
-    println!("report: {:?},{:?},{:?}", self.xy.0, self.xy.1, self.face);
+    
+      println!("report: {:?},{:?},{:?}", self.xy.0, self.xy.1, self.face);
       //state    
+      
       true
     }
 
@@ -119,6 +127,7 @@ impl Pacman{
     if !self.board.can_occupy_xy(xy) {
       return false;
     }
+    //debug!(r#"{:?},{:?}"#,xy,face);
     self.xy=xy;
     self.face = face;
     self.is_placed = true;
@@ -130,7 +139,7 @@ impl Pacman{
   
       if cmd.clone().starts_with("PLACE") {
         let replaced=cmd.as_str().replace("PLACE ", "");
-        let xy_face:Vec<&str> = replaced.split(",").collect();
+        let xy_face:Vec<&str> = replaced.split(",").collect();         
         self.place((xy_face[0].parse::<isize>().unwrap(), xy_face[1].parse::<isize>().unwrap()), xy_face[2].to_string());
       }
       if cmd.contains("MOVE") {

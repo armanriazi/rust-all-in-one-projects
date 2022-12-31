@@ -55,7 +55,7 @@ impl Play{
 
     #[tokio::main]
     pub async fn play(filepath:&str,pacman:&mut Pacman) -> io::Result<bool>{
-        info!("Playing...");
+        println!("Playing...");
               
       let mut f = File::open(filepath).await?;
       //let mut buffer = [0; 1024];

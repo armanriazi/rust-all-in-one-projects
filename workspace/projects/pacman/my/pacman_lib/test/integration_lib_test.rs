@@ -1,4 +1,4 @@
-use self::common::adder;
+use self::common::boardspace_test;
 
 /// process test
 ///
@@ -36,9 +36,8 @@ mod common;
 
 
 #[test]
-fn it_adds_two() {
-    common::setup();
-    assert_eq!(4, adder::add_two(2));
+fn main() {
+    common::setup();    
 }
 
 
