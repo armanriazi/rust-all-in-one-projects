@@ -49,6 +49,13 @@ impl Play{
 
     pub fn play() ->bool{
         info!("Playing...");
+    //           async play(commandsFileName) {
+    //     const comands = await fileReader(commandsFileName)
+    //     await comands.forEach((command) => {
+    //       this.pacmanObj.run(command)
+    //     })
+    //     return true
+    //   }
         true
     }
 }

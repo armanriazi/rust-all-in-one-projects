@@ -1,6 +1,7 @@
 #![allow(dead_code, unused_variables, unused_imports)]
 
 
+use pacman_lib::core::filereader::FileReader;
 use pacman_lib::core::play::Play;
 use pacman_lib::core::stateboard::{Message as MessageStateBoard };
 use pacman_lib::core::statepacman::{Message as MessageStatePacman};
@@ -18,7 +19,7 @@ use array2d::{Array2D, Error};
 /// ## Commands
 ///
 ///
-/// ```RUST_LOG=INFO cargo run  -p pacman_bin --bin pacman_main_bin file workspace/projects/pacman/my/pacman_bin/data/sample1.txt```
+/// ```RUST_LOG=INFO cargo run  -p pacman_bin --bin pacman_main_bin file "/mnt/home/rust-all-in-one-projects/workspace/projects/pacman/my/pacman_lib/src/core/commands/text-sample-0.txt"```
 ///
 /// ```cargo doc  --package pacman_bin --message-format short --no-deps --open --color always```
 ///
@@ -51,16 +52,27 @@ use array2d::{Array2D, Error};
 pub fn main() -> Result<(), CustomError> {
 
     init_app();
-
+    
     survey_init_env_logger(true);
 
     info!("Starting Up...");
+
+    let mut args: Vec<String> = env::args().collect();
+    let mut file = String::default();
+
+    if (&args).len() <= 1 {
+        info!("** Please select a runner mode\n Help(file path transaction_list, or macrojson transaction_list)\n Default is cargo run macrojson **\n");
+        args.push("macrojson".to_owned());
+    } else {        
+        file = (&args[2]).trim().to_lowercase();
+    }
 
     let  mut play= Play{};
     let _stateboard=Play::arrange_stateboard(&(5_isize,5_isize));
     let _statepacman=Play::arrange_statepacman(_stateboard);
     Play::play();
-
+    let f=FileReader::file_reader(&file).unwrap();
+    info!("{:?}",f);
     Ok(())
 }
 
