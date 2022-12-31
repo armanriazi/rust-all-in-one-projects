@@ -32,7 +32,7 @@ impl Pacman{
           if !self.board.can_occupy_xy((dx+1,dy)){
             return false;
           }
-          self.board.vacant_xy((dx,dy));
+          self.board.unoccupy_xy((dx,dy));
           self.board.occupy_xy((dx+1,dy));
           self.xy.0 += 1;
           return true;
@@ -41,7 +41,7 @@ impl Pacman{
           if !self.board.can_occupy_xy((dx-1,dy)){
             return false;
           }
-          self.board.vacant_xy((dx,dy));
+          self.board.unoccupy_xy((dx,dy));
           self.board.occupy_xy((dx-1,dy));
           self.xy.0 -= 1;
           return true;
@@ -51,7 +51,7 @@ impl Pacman{
           if !self.board.can_occupy_xy((dx,dy + 1 )){
             return false;
           }
-          self.board.vacant_xy((dx,dy));
+          self.board.unoccupy_xy((dx,dy));
           self.board.occupy_xy((dx,dy + 1 ));
           self.xy.1 += 1;
           return true;
@@ -60,7 +60,7 @@ impl Pacman{
           if !self.board.can_occupy_xy((dx,dy - 1 )){
             return false;
           }
-          self.board.vacant_xy((dx,dy));
+          self.board.unoccupy_xy((dx,dy));
           self.board.occupy_xy((dx,dy - 1 ));
           self.xy.1 -= 1;
           return true;

@@ -72,7 +72,7 @@ impl Board {
       }
        false
     }
-    pub fn  vacant_xy(&mut self,xy:(isize,isize)) -> bool {
+    pub fn  unoccupy_xy(&mut self,xy:(isize,isize)) -> bool {
       // if !self.cells[xy.0] { 
       //   self.cells[xy.0] = [];
       // }

@@ -43,13 +43,11 @@ use array2d::{Array2D, Error};
 
 
 /// cargo run
-/// RUST_LOG=INFO time cargo run pacman ../data/1.json
+/// RUST_LOG=INFO time cargo run pacman ../data/sample1.json
 
 #[allow(dead_code)]
 #[allow(unused_mut)]
 pub fn main() -> Result<(), CustomError> {
-
- 
 
     init_app();
 
@@ -70,8 +68,6 @@ pub fn main() -> Result<(), CustomError> {
         (5,5)
     ))));
     state.process(Message::IsCompleted(true));
-
-
 
     Ok(())
 }
@@ -107,8 +103,18 @@ fn init_app() -> impl std::process::Termination {
         std::process::ExitCode::FAILURE
     };
 }
-//---
 
+/// ## Result
+/// ```compile_fail,no_run
+/// running 1 test
+/// First column:
+/// 1
+/// 4
+/// All elements:
+/// 1 2 3 
+/// 4 100 6 
+/// test test ... ok
+/// ```
 #[test]
 fn test(){
         let prefilled = Array2D::filled_with(42, 2, 3);
