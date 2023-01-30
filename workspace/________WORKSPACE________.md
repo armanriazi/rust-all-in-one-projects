@@ -1,5 +1,12 @@
-#![allow(dead_code, unused_variables)]
 
+[[RUST]]
+
+[[PROJECTS]]
+
+
+# Template
+
+/// #![allow(dead_code, unused_variables)]
 /// packtpub-string-bin-ex-1
 ///
 /// ## Commands
@@ -17,30 +24,11 @@
 /// * `Arg1` - This is the [your type] to [your verb] the [your struct/func name]
 ///
 /// # Return
-/// `assert:true`
+/// `nothing`
 ///
 /// ## Example
 /// //```rust,compile_fail,ignore
 
 
-[[RUST]]
 
-[[PROJECTS]]
 
-[[BORROWCHECKER]]
-
-[[COMMANDLINE]]
-
-[[COLLECTION]]
-
-[[DATA]]
-
-[[FEATURE]]
-
-[[FLOWCONTROL]]
-
-[[THREAD]]
-
-[[TYPES]]
-
-[[MEMORY]]

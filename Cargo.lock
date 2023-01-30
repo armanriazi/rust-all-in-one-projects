@@ -907,6 +907,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "todolist_parser_bin"
+version = "0.1.0"
+dependencies = [
+ "todolist_parser_lib",
+]
+
+[[package]]
+name = "todolist_parser_lib"
+version = "0.1.0"
+
+[[package]]
 name = "tokio"
 version = "1.23.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"

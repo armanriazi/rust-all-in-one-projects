@@ -17,6 +17,9 @@ members = [
     "workspace/shared",
 
 
+    "workspace/projects/error/master-rust/todolist-parser/todolist_parser_bin",
+    "workspace/projects/error/master-rust/todolist-parser/todolist_parser_lib",
+
     "workspace/projects/pacman/my/pacman_bin",
     "workspace/projects/pacman/my/pacman_lib",
     "workspace/projects/pacman/my/pacman_test",
@@ -26,10 +29,13 @@ members = [
 
     "workspace/projects/file/rust-in-action/file_bin",
     "workspace/projects/file/rust-in-action/file_lib",
+
     "workspace/projects/fuzzme/rust-in-action/fuzz_bin",
     "workspace/projects/fuzzme/rust-in-action/fuzz_lib",
+
     "workspace/projects/satelite_messaging/rust-in-action/satelite_messaging_bin",
     "workspace/projects/satelite_messaging/rust-in-action/satelite_messaging_lib",
+
     "workspace/projects/process_line/rust-in-action/process_line_bin",
     "workspace/projects/process_line/rust-in-action/process_line_lib",
 ]

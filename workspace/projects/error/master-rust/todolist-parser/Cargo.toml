@@ -1,0 +1,19 @@
+[package]
+edition = "2021"
+name = "todolist_parser"
+version = "0.1.0"
+authors = ["Arman <armanriyazi.github.io@gmail.com>"]
+description = "A collection of asesome projects"
+readme = "README.md"
+license = "MPL-2.0"
+homepage = "https://armanriazi.github.io/site/public/programming/rust/rust"
+repository = "https://github.com/armanriazi/armanriazi-awesome-rust"
+keywords = ["dynamic","error"]
+categories = ["development-tools", "accessibility", "error-handle","parsing"]
+
+
+[workspace]
+members = [
+    "todolist_parser_bin",
+    "todolist_parser_lib,    
+]
