@@ -1,6 +1,6 @@
 #![allow(dead_code, unused_variables, unused_imports)]
 
-use proptest::prelude::*;
+
 //---
 use super::{error::CustomError, *};
 use crate::models::{Message, State, Survey};

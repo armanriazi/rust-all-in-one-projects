@@ -119,7 +119,7 @@ cd rust-survey-json_bin
 }
 ```
 
-> Tags #json #published #survey
+> `tags` [[json]] #published [[survey]]
 
 
 ```

@@ -3,7 +3,7 @@
 mod tests {
 use super::*;
 use pacman_lib::core::boradspace::BoardSpace;
-use pretty_assertions::{assert_eq, assert_ne};
+//use pretty_assertions::{assert_eq, assert_ne};
 
 
     #[test]

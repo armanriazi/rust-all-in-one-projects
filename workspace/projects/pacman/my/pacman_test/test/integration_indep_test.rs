@@ -28,12 +28,13 @@ use array2d::Array2D;
 /// 
 /// `passed`
 /// 
-
+mod common;
+use self::common::setup;
 #[cfg(test)]
 
-use pretty_assertions::assert_eq;
-use proptest::prelude::*;
-mod common;
+//use pretty_assertions::assert_eq;
+//use proptest::prelude::*;
+
 
 
 #[test]

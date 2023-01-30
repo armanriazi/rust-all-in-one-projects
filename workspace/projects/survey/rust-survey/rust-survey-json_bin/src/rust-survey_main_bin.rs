@@ -33,14 +33,14 @@ use std::{env::args, fs::File};
 ///
 /// # Return
 /// 
-/// ```no_run,compile_file
-/// I'm running on a unix machine!
-/// `Making model(updated key successfuly):\`name\``
-/// `Making model(updated key successfuly):\`participant_count\``
-/// `Making model(updated key successfuly):\`response_rate\``
-/// `Making model(updated key successfuly):\`submitted_response_count\``
-/// `Making model(updated key successfuly):\`themes\``
-/// `Making model(updated key successfuly):\`url\``
+/// ```md,no_run,compile_fail, ignore
+///  // I'm running on a unix machine!
+/// `// Making model(updated key successfuly):\`name\``
+/// `// Making model(updated key successfuly):\`participant_count\``
+/// `// Making model(updated key successfuly):\`response_rate\``
+/// `// Making model(updated key successfuly):\`submitted_response_count\``
+/// `// Making model(updated key successfuly):\`themes\``
+/// `// Making model(updated key successfuly):\`url\``
 /// 
 /// survey: Survey {
 ///         name: `\`Simple Survey\``,

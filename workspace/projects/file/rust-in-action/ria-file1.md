@@ -1,4 +1,4 @@
 
 
 
-tags #from_utf8_lossy #write #formatter #file #reserve #append
+> `tags` [[from_utf8_lossy]] [[write]] [[formatter]] [[file]] [[reserve]] [[append]]

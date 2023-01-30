@@ -4,8 +4,6 @@ name = "pacman_test"
 version = "0.1.0"
 
 [dev-dependencies]
-proptest = "1"
-pretty_assertions = "1"
 array2d="0.3.0"
 
 

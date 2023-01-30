@@ -1,5 +1,4 @@
-// todolist_parser/src/error.rs
-
+#![allow(dead_code, unused_variables)]
 use std::error::Error;
 use std::fmt;
 use std::fmt::Display;

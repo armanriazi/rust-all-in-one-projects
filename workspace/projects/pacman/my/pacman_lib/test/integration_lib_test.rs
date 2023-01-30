@@ -28,11 +28,13 @@ use self::common::boardspace_test;
 /// `passed`
 /// 
 
+
+mod common;
 #[cfg(test)]
 
-use pretty_assertions::assert_eq;
-use proptest::prelude::*;
-mod common;
+
+//use pretty_assertions::assert_eq;
+//use proptest::prelude::*;
 
 
 #[test]

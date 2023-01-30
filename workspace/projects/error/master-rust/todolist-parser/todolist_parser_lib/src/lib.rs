@@ -2,13 +2,13 @@
 
 //! This crate provides an API to parse list of todos
 
-use ParseErr;
-use ReadErr;
 
 use std::fs::read_to_string;
 use std::path::Path;
-
+mod core;
 use std::error::Error;
+
+use self::core::error::{ReadErr, ParseErr};
 
 /// This struct contains a list of todos parsed as a Vec<String>
 #[derive(Debug)]

@@ -12,8 +12,6 @@ keywords = ["api","rest","survey","json", "filter"]
 categories = ["development-tools", "accessibility", "json","parsing"]
 
 [dev-dependencies]
-proptest = "1"
-pretty_assertions = "1"
 log = "0.4.0"
 
 [dependencies]
@@ -25,7 +23,7 @@ proptest = "1"
 
 
 [[test]]
-doc = true
+doc = false
 name = "integration_test"
 path = "test/integration_test.rs"
 test = true

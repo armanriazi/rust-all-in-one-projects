@@ -35,7 +35,7 @@ use todolist_parser_lib::TodoList;
 
 
 fn main() {
-    let todos = TodoList::get_todos("../todo");
+    let todos = TodoList::get_todos("/mnt/home/rust-all-in-one-projects/workspace/projects/error/master-rust/todolist-parser/todolist_parser_bin/src/todo");
     match todos {
         Ok(list) => println!("{:?}", list),
         Err(e) => {

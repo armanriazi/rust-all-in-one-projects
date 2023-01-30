@@ -32,8 +32,8 @@ use self::common::adder;
 
 #[cfg(test)]
 
-use pretty_assertions::assert_eq;
-use proptest::prelude::*;
+//use pretty_assertions::assert_eq;
+//use proptest::prelude::*;
 mod common;
 
 

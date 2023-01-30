@@ -10,4 +10,4 @@
 
 [[mr_error_todolist_parser]]
 
-[[SATELITE-MESSAGING]]
+[[ria-satelite-messaging]]
